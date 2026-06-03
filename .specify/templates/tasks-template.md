@@ -24,7 +24,9 @@ description: "Task list template for feature implementation"
 - **Single project**: `src/`, `tests/` at repository root
 - **Web app**: `backend/src/`, `frontend/src/`
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
+- **Flutter Clean Architecture**: `lib/features/[feature]/{domain,data,presentation}/`, `test/{domain,data,presentation}/`
 - Paths shown below assume single project - adjust based on plan.md structure
+- **Constitutional rule**: Implementation order MUST be Domain → Data → Presentation (inward out).
 
 <!--
   ============================================================================
@@ -180,8 +182,8 @@ Examples of foundational tasks (adjust based on your project):
 ### Within Each User Story
 
 - Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
+- Domain layer (entities, use cases, repo interfaces) before Data layer (implementations)
+- Data layer before Presentation layer (widgets, ViewModels)
 - Core implementation before integration
 - Story complete before moving to next priority
 

@@ -40,7 +40,11 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+1. Clean Architecture compliance — no layer-skip imports (domain MUST NOT depend on data/presentation).
+2. Riverpod-exclusive state management — no setState/InheritedWidget for app state.
+3. Test coverage for all domain use cases (unit tests written before or alongside).
+4. Modular feature separation — no circular dependencies between features.
+5. Implementation order: Domain → Data → Presentation (inward out).
 
 ## Project Structure
 
@@ -92,12 +96,20 @@ frontend/
 │   └── services/
 └── tests/
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
+# [REMOVE IF UNUSED] Option 3: Flutter Mobile (when "Flutter" detected)
+lib/
+├── core/                  # Shared utilities, constants, extensions
+├── features/
+│   └── [feature]/
+│       ├── domain/        # Entities, use cases, repository interfaces (pure Dart)
+│       ├── data/          # Repository impls, data sources, DTOs, mappers
+│       └── presentation/  # Pages, widgets, ViewModels/Notifiers (Riverpod)
+└── app.dart               # App entry point with routing
 
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+test/
+├── domain/                # Unit tests for domain layer
+├── data/                  # Repository/data source tests
+└── presentation/          # Widget/ViewModel tests
 ```
 
 **Structure Decision**: [Document the selected structure and reference the real

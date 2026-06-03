@@ -1,50 +1,124 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+  Sync Impact Report
+  ==================
+  Version change: 0.0.0 (template) → 1.0.0
+  Modified principles: N/A (first population from template)
+  Added sections:
+    - Principle I: Clean Architecture & Layer Separation
+    - Principle II: Riverpod State Management with MVVM/MVI
+    - Principle III: Test-First & Fully Testable Core (NON-NEGOTIABLE)
+    - Principle IV: Modular Design & Clear Abstractions
+    - Principle V: Flutter Mobile-Optimized Patterns
+    - Section: Technology Stack & Architecture Constraints
+    - Section: Development Workflow & Quality Gates
+    - Governance rules
+  Removed sections: None
+  Templates requiring updates:
+    - .specify/templates/plan-template.md ✅ updated (Constitution Check gates aligned)
+    - .specify/templates/spec-template.md ✅ updated (Flutter/Clean Arch context added)
+    - .specify/templates/tasks-template.md ✅ updated (layer-aware task categories added)
+    - .specify/templates/checklist-template.md ⚠ pending (no changes needed - generic)
+  Follow-up TODOs:
+    - TODO(RATIFICATION_DATE): unknown original adoption date. Set when known.
+-->
+
+# Sprint Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Clean Architecture & Layer Separation
+Business logic MUST be fully isolated from UI and infrastructure concerns.
+The codebase MUST follow strict layered architecture:
+- **Domain layer** (entities, use cases, repository interfaces): Zero external dependencies. Pure Dart only.
+- **Data layer** (repository implementations, data sources, DTOs, mappers): Depends only on Domain.
+- **Presentation layer** (UI widgets, ViewModels/Controllers, pages): Depends only on Domain via injected interfaces.
+- Dependencies MUST point inward — Presentation → Domain ← Data (no Presentation→Data leaks).
+Rationale: Enforces testability, swapability of implementations, and framework-independent business rules.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Riverpod State Management with MVVM/MVI
+All UI state management MUST use Riverpod exclusively. Mixing setState, InheritedWidget,
+or other state solutions alongside Riverpod is prohibited without explicit constitutional exception.
+- ViewModels (MVVM) or ViewModels/Intents (MVI) MUST be implemented as Riverpod providers
+  (`StateNotifierProvider`, `AsyncNotifierProvider`, `NotifierProvider`, or `StreamProvider`).
+- Business logic MUST NOT live in Widgets — widgets read providers only.
+- MVI pattern: use sealed/freezed classes for state and intents/events.
+- Rationale: Riverpod provides compile-safe, testable, and composable state management aligned
+  with Clean Architecture's dependency inversion.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Test-First & Fully Testable Core (NON-NEGOTIABLE)
+Every domain layer component MUST have a corresponding unit test written before or alongside
+implementation. Tests MUST cover:
+- Domain entities and value objects
+- Use case/interactor logic (all success and error branches)
+- Repository contract behavior (via mock implementations)
+- ViewModel/Notifier state transitions
+Data layer tests (repository impls with real/fake data sources) and widget tests are strongly
+encouraged but not governed by this principle — use pragmatic judgment.
+Rationale: Ensures business rules are verified independently of frameworks and UI.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Modular Design & Clear Abstractions
+The project MUST be organized into highly modular, feature-first packages:
+- Each feature or bounded context SHOULD be a self-contained module with its own
+  domain/data/presentation layers.
+- Shared code (core/commons) MUST have a clearly documented purpose — no "utility" dumping grounds.
+- Abstraction boundaries MUST be explicit: repository interfaces in domain, implementations in data.
+- Circular dependencies between modules are strictly prohibited.
+Rationale: Modules can be developed, tested, and reasoned about independently.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Flutter Mobile-Optimized Patterns
+- Widgets MUST be stateless where possible; stateful widgets are reserved for lifecycle-scoped
+  concerns (e.g., animation controllers, focus nodes).
+- Build methods MUST be pure: no side effects, no business logic, only widget composition.
+- Platform channels and native code MUST be encapsulated behind repository interfaces in the
+  domain layer — never accessed directly from presentation.
+- Deep linking, navigation, and routing MUST be centralized (e.g., GoRouter) and not scattered
+  across widgets.
+- Performance-sensitive operations (large lists, images, animations) MUST use `const` constructors,
+  `ListView.builder`, `ImageCache`, and `RepaintBoundary` as appropriate.
+Rationale: Ensures the app remains responsive, maintainable, and idiomatic on mobile platforms.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technology Stack & Architecture Constraints
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- **Language**: Dart (matching Flutter SDK constraint in pubspec.yaml).
+- **State Management**: Riverpod (flutter_riverpod, riverpod_annotation).
+- **Code Generation**: freezed (data classes/sealed unions), json_serializable (DTOs),
+  riverpod_generator (provider code-gen).
+- **Navigation**: GoRouter (declarative, deep-link capable).
+- **Dependency Injection**: Riverpod's provider graph (no Service Locator or DI containers outside
+  the Riverpod ecosystem).
+- **Testing**: flutter_test (unit/widget), mockito/mocktail (mocks), integration_test (E2E).
+- **Static Analysis**: Dart's built-in analyzer + flutter_lints (strict rule set).
+- **Formatting**: `dart format` (line length 80 chars preferred).
+Rationale: Constraining the tech stack avoids architectural drift and ensures all contributors
+follow the same conventions.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow & Quality Gates
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+1. **Pre-implementation**: Feature spec approved, plan aligned with constitution principles.
+2. **Implementation order**: Domain layer → Data layer → Presentation layer (inward out).
+3. **Testing gate**: All domain unit tests MUST pass before presentation layer work begins.
+4. **Code review gate**: Every PR MUST verify Clean Architecture layer compliance —
+   no infrastructure imports in domain, no business logic in widgets.
+5. **Static analysis gate**: `dart analyze` MUST pass with zero errors before merge.
+6. **Formatting gate**: `dart format --set-exit-if-changed .` MUST pass before merge.
+Rationale: Layered implementation prevents coupling leaks; quality gates catch violations early.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all ad-hoc development practices within the Sprint project.
+Amendments require:
+1. A documented proposal (PR or spec) describing the change and rationale.
+2. Explicit approval from the project maintainer or lead.
+3. A migration plan for existing code that would fall out of compliance.
+4. A version bump per semantic versioning rules defined below.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Versioning policy**:
+- MAJOR: Backward-incompatible governance changes, principle removals or redefinitions.
+- MINOR: New principles or materially expanded guidance.
+- PATCH: Clarifications, wording refinements, typo fixes.
+
+**Compliance review**: Every feature spec and implementation plan MUST include a
+"Constitution Check" section verifying alignment. Complexity deviations must be documented
+and justified.
+
+**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-06-03
