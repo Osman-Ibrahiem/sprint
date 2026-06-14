@@ -27,7 +27,7 @@
 ## Feature Readiness
 
 - [x] All functional requirements have clear done criteria in Success Criteria
-- [x] SC-001 through SC-008 cover all five foundation areas specified by the user
+- [x] SC-001 through SC-008 cover all six foundation areas (structure, tokens, routing, state, l10n, logging)
 - [x] No ambiguous requirements remain
 
 ## Notes
@@ -35,4 +35,6 @@
 - This spec deviates from the standard template by omitting User Scenarios (intentional:
   non-user-facing spec). The Success Criteria section acts as the Definition of Done.
 - All items pass (with the justified exception noted above).
-- Ready for `/speckit-plan`.
+- Updated 2026-06-14 after clarification session: env config deferred, Supabase excluded
+  from foundation, AppLogger (FR-009) added, SC-008 updated to cover 6 foundation areas.
+- Ready for `/speckit-tasks`.

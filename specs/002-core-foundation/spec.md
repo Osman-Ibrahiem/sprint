@@ -40,11 +40,17 @@ criteria only."
   system MUST be bootstrapped at app startup and support adding new languages without
   structural changes.
 - **FR-006**: The app MUST compile and run on web, iOS, and Android from the same codebase
-  with zero platform-specific workarounds in the foundation layer.
+  with zero platform-specific workarounds in the foundation layer. No backend SDK
+  (Supabase, Firebase, or equivalent) is declared or initialized in this milestone.
 - **FR-007**: The codebase MUST pass static analysis with zero errors and zero warnings at
   the end of foundation setup.
 - **FR-008**: The project MUST include a documented local setup procedure that allows a new
   developer to build and run the app in under 10 minutes.
+- **FR-009**: The foundation MUST provide a single shared logging abstraction (`AppLogger`)
+  in `lib/core/` that all feature branches use for error and debug output. It MUST wrap
+  a zero-external-dependency logging solution (`dart:developer` or the `logging` package)
+  and expose a consistent interface so the underlying implementation can be swapped without
+  touching call sites in feature code.
 
 ### Key Entities
 
@@ -56,6 +62,9 @@ criteria only."
   making all state providers available to all features.
 - **L10n / ARB files**: The externalized string catalog powering Arabic UI text. Each
   UI-visible string has exactly one definition here.
+- **AppLogger**: A thin logging abstraction in `lib/core/` wrapping `dart:developer` or
+  the `logging` package. All feature code calls `AppLogger` — never `print` or
+  `debugPrint` directly — so the underlying output target can be upgraded later.
 
 ---
 
@@ -77,9 +86,9 @@ criteria only."
 - **SC-006**: `dart analyze` reports zero errors and zero warnings on the project.
 - **SC-007**: A developer following only the setup documentation can run the app locally
   on their machine in under 10 minutes without verbal assistance.
-- **SC-008**: All five foundation areas (project structure, design tokens, routing, state
-  init, localization) have at least one passing smoke test (build + launch on each target
-  platform) before the foundation is declared done.
+- **SC-008**: All six foundation areas (project structure, design tokens, routing, state
+  init, localization, logging) have at least one passing smoke test (build + launch on each
+  target platform) before the foundation is declared done.
 
 ---
 
@@ -99,3 +108,18 @@ criteria only."
 - "Claude Design system" refers to the design specification produced by Claude Design
   (the design tool), not the Claude AI product. Design token values will be provided as
   part of the design handoff.
+- Environment configuration (dev/staging/prod env files, Supabase keys) is explicitly out
+  of scope for the foundation. The first feature branch requiring Supabase connectivity will
+  introduce env config at that time.
+- No backend packages (Supabase, Firebase, or any data-source SDK) are declared or
+  initialized in the foundation. The first data-layer feature branch introduces them.
+  The foundation's `pubspec.yaml` contains only UI, state, navigation, and localization
+  dependencies.
+
+## Clarifications
+
+### Session 2026-06-14
+
+- Q: Should the foundation include environment configuration (dev/staging/prod)? → A: Deferred — no env config in foundation; the first feature branch that needs Supabase adds it.
+- Q: Should the foundation initialize the Supabase client? → A: No — Supabase is not even declared as a dependency in the foundation; the first data-layer feature branch adds it.
+- Q: Should the foundation establish a logging baseline? → A: Yes — add `AppLogger` to `lib/core/` wrapping `dart:developer`/`logging` package with no external service dependency.
