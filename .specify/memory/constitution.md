@@ -1,15 +1,23 @@
 <!--
   Sync Impact Report
   ==================
-  Version change: 1.0.0 → 1.0.0 (no bump — validation pass, no content changes)
+  Version change: 1.0.0 → 1.1.0
   Modified principles: None
-  Added sections: None
+  Added sections:
+    - "Domain Business Rules" (§ VI) — Sprint-specific invariants governing
+      slot management, booking flows, ticketing, pricing, and asset control.
   Removed sections: None
   Templates requiring updates:
-    - .specify/templates/plan-template.md ✅ aligned (Constitution Check gates match all 5 principles)
-    - .specify/templates/spec-template.md ✅ aligned (no constitution-specific sections required)
-    - .specify/templates/tasks-template.md ✅ aligned (Flutter Clean Architecture paths + Domain→Data→Presentation rule present)
-    - .specify/templates/checklist-template.md ✅ aligned (generic template, no specific changes needed)
+    - .specify/templates/plan-template.md ✅ aligned (Constitution Check gates
+      match all 5 architecture principles; business rules are domain entities
+      verified through existing principle I + III gates)
+    - .specify/templates/spec-template.md ✅ aligned (no new mandatory sections
+      required — business rules inform FR/entity wording, not template structure)
+    - .specify/templates/tasks-template.md ✅ aligned (Domain → Data →
+      Presentation order already enforced; business rule tasks fall naturally
+      under domain-layer phases)
+    - .specify/templates/checklist-template.md ✅ aligned (generic template,
+      no specific changes needed)
   Follow-up TODOs:
     - TODO(RATIFICATION_DATE): Original adoption date unknown. Set when known.
 -->
@@ -69,6 +77,69 @@ Rationale: Modules can be developed, tested, and reasoned about independently.
   `ListView.builder`, `ImageCache`, and `RepaintBoundary` as appropriate.
 Rationale: Ensures the app remains responsive, maintainable, and idiomatic on mobile platforms.
 
+## Domain Business Rules
+
+These invariants are non-negotiable product constraints. Every use case, entity, and repository
+contract MUST enforce them. Violations in the domain layer are constitution violations.
+
+### BR-01 · Slot Capacity Cap & Auto-Close
+Every bookable time slot MUST carry a `capacity` integer (set per facility/lane).
+- When `confirmedBookings >= capacity`, the slot status MUST transition to `SlotStatus.full`
+  atomically (single DB transaction or optimistic-lock check).
+- A full slot MUST be invisible or non-selectable in the booking UI; it MUST NOT be bookable
+  via the API even if the UI is bypassed.
+- Capacity checks MUST be re-evaluated server-side at payment confirmation, not only at
+  slot-selection time.
+
+### BR-02 · Waitlist & Fair-Queue on Cancellation
+When a confirmed booking is cancelled:
+1. The slot's `confirmedBookings` count MUST decrement atomically.
+2. If a waitlist queue exists for that slot, the **head** of the queue MUST receive a
+   time-bounded offer (configurable, default 30 minutes) to confirm their booking.
+3. If the offer expires without confirmation, the next queue member MUST receive the offer.
+4. No manual admin intervention is required or permitted to skip queue order.
+Rationale: Enforces fairness and equal opportunity — a core doctoral dissertation requirement.
+
+### BR-03 · 7-Day Booking Window with Real-Time Slot Disabling
+- The booking window is exactly `[today, today + 6 days]` inclusive (7 calendar days).
+- Slots whose `startTime` is in the past MUST be disabled in real time — the domain MUST
+  reject bookings where `slot.startTime <= DateTime.now()` regardless of UI state.
+- The presentation layer MUST refresh slot availability on screen focus to prevent stale state.
+
+### BR-04 · Two Separate Booking Flows (Never Merged)
+Two flows exist and MUST be implemented as distinct use cases with no shared entry point:
+- **Free-booking flow**: User selects facility → selects day → selects available hour range.
+  No trainer involvement. Use case: `CreateFreeBookingUseCase`.
+- **Coached flow**: User selects trainer → views trainer's available 1-hour slots → books one.
+  Slot availability is derived from the trainer's schedule, not facility-wide availability.
+  Use case: `CreateCoachedBookingUseCase`.
+Merging these flows into a conditional branch within one use case is prohibited.
+
+### BR-05 · QR Ticket as Physical Entry Pass
+A QR ticket is the **sole authorized entry mechanism** — it is not optional attendance evidence.
+- A ticket MUST be issued only after payment is fully confirmed (no pending-payment tickets).
+- The QR payload MUST encode: `bookingId`, `userId`, `slotId`, `facilityId`, and an
+  HMAC signature to prevent forgery.
+- Entry MUST be denied when the QR is invalid, expired (slot time passed), already scanned,
+  or belongs to a different facility.
+- Staff/trainer scan is the authoritative gate — manual override requires explicit admin authorization logged as an audit event.
+
+### BR-06 · Asset & Equipment Management is Staff-Only
+The asset/equipment management feature (`عهدة`) MUST be guarded at every layer:
+- Domain: `AssetManagementUseCase` MUST require a `UserRole.staff` or higher permission check.
+- Data: Repository queries MUST include a server-side role filter (RLS policy or equivalent).
+- Presentation: Routes MUST redirect non-staff users to an unauthorized screen — no client-side
+  visibility toggle is sufficient on its own.
+No booker or trainer role may read, write, or report on asset records.
+
+### BR-07 · Automatic Pricing by Account Type
+Pricing MUST be computed by the domain layer — never entered manually by staff or users.
+- `UserAffiliation.universityAffiliated` → discounted price (set in facility's price table).
+- `UserAffiliation.external` → full price.
+- Guest (unauthenticated) users MUST see prices but cannot book.
+- Price applied at booking creation MUST be stored immutably on the `Booking` entity;
+  subsequent affiliation changes MUST NOT retroactively alter confirmed booking prices.
+
 ## Technology Stack & Architecture Constraints
 
 - **Language**: Dart (matching Flutter SDK constraint in pubspec.yaml).
@@ -113,4 +184,4 @@ Amendments require:
 "Constitution Check" section verifying alignment. Complexity deviations must be documented
 and justified.
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-06-03
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-06-14

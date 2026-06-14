@@ -1,5 +1,9 @@
 # Sprint (سبرنت) — Claude Code Project Context
 
+## ALWAYS READ FIRST
+Before any task, read: .specify/memory/constitution.md
+This is the project constitution — all code must comply with it.
+
 ## What is this project
 Sprint is a digital governance system for sports facility management
 at Tanta University. It solves real administrative problems: random
@@ -74,7 +78,7 @@ Skills installed in .claude/skills/ — use in this order:
 4. /speckit-tasks
 5. /speckit-implement  ← may run in OpenCode instead of Claude Code
 
-Constitution: .specify/constitution.md
+Constitution: .specify/memory/constitution.md
 Specs: .specify/specs/
 
 ## Definition of done
@@ -83,3 +87,8 @@ Specs: .specify/specs/
 - No hardcoded colors, strings, or magic numbers.
 - Clean Architecture layer boundaries respected.
 - Arabic strings externalized via flutter_localizations.
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
