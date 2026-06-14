@@ -27,8 +27,8 @@ abstract final class AppTheme {
       // ── Error ───────────────────────────────────────────────────────────
       error: AppColors.error,
       onError: AppColors.white,
-      errorContainer: Color(0xFF4A1515),
-      onErrorContainer: Color(0xFFFFB4A9),
+      errorContainer: AppColors.errorContainer,
+      onErrorContainer: AppColors.onErrorContainer,
       // ── Background / surface stack ─────────────────────────────────────
       surface: AppColors.green800,
       onSurface: AppColors.textPrimary,

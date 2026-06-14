@@ -10,7 +10,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'سبرنت',
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appName,
       theme: AppTheme.dark(),
       routerConfig: ref.watch(appRouterProvider),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

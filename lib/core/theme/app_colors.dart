@@ -29,6 +29,8 @@ abstract final class AppColors {
   static const Color success = Color(0xFF1D9E75);
   static const Color warning = Color(0xFFEF9F27);
   static const Color error = Color(0xFFE24B4A);
+  static const Color errorContainer = Color(0xFF4A1515);
+  static const Color onErrorContainer = Color(0xFFFFB4A9);
   static const Color info = Color(0xFF378ADD);
 
   // ── Status badge pairs ───────────────────────────────────────────────────

@@ -9,7 +9,7 @@ class HomeShellScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appName)),
-      body: const Center(child: Text('سبرنت')),
+      body: Center(child: Text(AppLocalizations.of(context)!.appName)),
     );
   }
 }
