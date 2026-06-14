@@ -19,4 +19,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get backToHome => 'العودة للرئيسية';
+
+  @override
+  String get splashSubtitle => 'احجز ملعبك، من غير زحمة ⚡';
+
+  @override
+  String get splashContinueHint => 'اضغط للمتابعة';
+
+  @override
+  String get loginTitle => 'أهلاً بيك في سبرنت';
+
+  @override
+  String get loginSubtitle => 'ابدأ حجزك دلوقتي';
 }

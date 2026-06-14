@@ -27,6 +27,9 @@ dependencies:
   # Localization
   intl: ^0.20.2
 
+  # Persistence
+  shared_preferences: ^2.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -45,6 +48,7 @@ flutter:
   assets:
     - assets/l10n/
     - assets/fonts/Cairo/
+    - assets/images/icons/
 
   fonts:
     - family: Cairo

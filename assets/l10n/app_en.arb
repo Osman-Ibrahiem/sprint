@@ -1,42 +1,42 @@
 {
-  "@@locale": "ar",
+  "@@locale": "en",
 
-  "appName": "سبرنت",
+  "appName": "Sprint",
   "@appName": {
     "description": "Application name displayed in the app bar"
   },
 
-  "errorPageTitle": "خطأ",
+  "errorPageTitle": "Error",
   "@errorPageTitle": {
     "description": "Title shown on the 404/error screen"
   },
 
-  "errorPageMessage": "الصفحة غير موجودة",
+  "errorPageMessage": "Page not found",
   "@errorPageMessage": {
     "description": "Body text on the 404/error screen"
   },
 
-  "backToHome": "العودة للرئيسية",
+  "backToHome": "Back to Home",
   "@backToHome": {
     "description": "Button label on error screen to navigate back to home"
   },
 
-  "splashSubtitle": "احجز ملعبك، من غير زحمة ⚡",
+  "splashSubtitle": "Book your court, hassle-free ⚡",
   "@splashSubtitle": {
     "description": "Subtitle shown on the splash screen below the app name"
   },
 
-  "splashContinueHint": "اضغط للمتابعة",
+  "splashContinueHint": "Loading…",
   "@splashContinueHint": {
     "description": "Hint text shown below the loading bar on the splash screen"
   },
 
-  "loginTitle": "أهلاً بيك في سبرنت",
+  "loginTitle": "Welcome to Sprint",
   "@loginTitle": {
     "description": "Heading text on the login placeholder screen"
   },
 
-  "loginSubtitle": "ابدأ حجزك دلوقتي",
+  "loginSubtitle": "Start booking now",
   "@loginSubtitle": {
     "description": "Subheading text on the login placeholder screen"
   }
