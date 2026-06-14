@@ -25,13 +25,13 @@ A new user opens the app for the first time. The native OS splash appears immedi
 1. **Given** the app is freshly installed and launched, **When** the OS loads, **Then** the native splash screen appears with a dark background and Sprint branding — no white flash.
 2. **Given** the native splash is visible, **When** Flutter initialises, **Then** the Flutter splash replaces the native splash with a pixel-identical dark screen — no gap or colour shift.
 3. **Given** the Flutter splash completes, **When** the transition runs, **Then** the user lands on the login screen placeholder with all UI rendered in Arabic (RTL) and dark theme active.
-4. **Given** the login placeholder is shown, **When** the user inspects the app icon in the task switcher, **Then** the icon is the dark variant.
+4. **Given** the login placeholder is shown, **When** the user inspects the app icon in the OS task switcher, **Then** the Sprint icon (dark variant — green square + lime bolt) is displayed.
 
 ---
 
 ### User Story 2 — Theme Toggle (Dark ↔ Light) at Runtime (Priority: P2)
 
-A user changes the app theme from dark to light (or vice versa) from within the app (e.g., a settings screen or a temporary debug toggle). The entire app re-renders immediately in the new theme without restarting. The app icon visible in the OS task switcher updates to the matching variant.
+A user changes the app theme from dark to light (or vice versa) from within the app (e.g., a settings screen or a temporary debug toggle). The entire app re-renders immediately in the new theme without restarting. The launcher icon always shows the dark (Sprint Green) variant — runtime OS launcher-icon switching is not supported natively on iOS or Android without a plugin and is out of scope for this feature.
 
 **Why this priority**: The constitution requires a Riverpod-driven theme that updates without restart. Proving this works validates the provider architecture that all future screens depend on.
 
@@ -76,21 +76,21 @@ A user changes the app language from Arabic to English (or vice versa). The enti
 ### Functional Requirements
 
 - **FR-001**: The app MUST display "سبرنت" as its name when the Arabic locale is active and "Sprint" when the English locale is active, in all system-visible contexts (splash, app bar, OS task switcher label where supported).
-- **FR-002**: The app MUST default to Arabic locale and dark theme on first launch, with no user configuration required.
+- **FR-002**: The app MUST default to Arabic locale and dark theme on the very first launch (no prior saved preference). On subsequent launches the app MUST restore the last user-selected theme and locale automatically.
 - **FR-003**: The app MUST support runtime locale switching between Arabic (RTL) and English (LTR) without an app restart, driven exclusively by a Riverpod locale provider.
 - **FR-004**: The app MUST support runtime theme switching between dark and light modes without an app restart, driven exclusively by a Riverpod ThemeMode provider.
-- **FR-005**: The native OS splash screen MUST use the dark background colour (`#1B1B1B` or the project's canonical dark surface) when the device is in dark mode and a matching light background when in light mode.
+- **FR-005**: The native OS splash screen MUST use `AppColors.green900` (`#0D1B13`) as the dark splash background and `AppColors.green50` (`#F8FFF9`) as the light splash background — both sourced from `core/theme/app_colors.dart`, zero hardcoded values.
 - **FR-006**: The Flutter splash screen MUST be pixel-identical to the native splash (same background colour, centred Sprint logo/wordmark, same proportions) to produce a seamless visual transition.
 - **FR-007**: After the Flutter splash completes, the app MUST navigate to the login screen placeholder automatically — no user action required.
 - **FR-008**: The login screen placeholder MUST be a static screen showing the app name in the active locale, with no interactive elements beyond what is needed to verify identity display.
 - **FR-009**: All user-visible strings MUST be externalised in ARB files (`app_ar.arb` for Arabic, `app_en.arb` for English); no hardcoded string literals in widget code.
-- **FR-010**: The app icon MUST have two variants — one for dark theme, one for light theme — and the correct variant MUST be shown in OS contexts that support adaptive icons.
+- **FR-010**: The app icon MUST use the dark variant (Sprint Green square + Lime bolt) as the static launcher icon on all platforms. A light-variant asset MUST be prepared and included in the asset bundle for future use, but dynamic runtime launcher-icon switching is explicitly out of scope for this feature.
 - **FR-011**: All theme values (colours, typography, spacing) used in the splash and login placeholder MUST be sourced from `core/theme/`; zero hardcoded colour or size values are permitted.
 
 ### Key Entities *(include if feature involves data)*
 
-- **ThemeMode Provider**: A Riverpod provider holding the current `ThemeMode` (dark/light). Writable from any screen; read by `MaterialApp`. Persisted in local storage for future launches (assumption: defaults to dark on first launch, then remembers last choice).
-- **Locale Provider**: A Riverpod provider holding the current `Locale` (Arabic/English). Writable from any screen; read by `MaterialApp`. Persisted in local storage for future launches (defaults to Arabic).
+- **ThemeMode Provider**: A Riverpod provider holding the current `ThemeMode` (dark/light). Writable from any screen; read by `MaterialApp`. Persisted via `shared_preferences` — defaults to dark on first launch, then restores last saved value on subsequent launches.
+- **Locale Provider**: A Riverpod provider holding the current `Locale` (Arabic/English). Writable from any screen; read by `MaterialApp`. Persisted via `shared_preferences` — defaults to `Locale('ar')` on first launch, then restores last saved value on subsequent launches.
 - **SplashRoute**: The Flutter splash screen widget. Reads theme and locale providers passively; triggers navigation to login placeholder after its completion animation.
 - **LoginPlaceholder**: A minimal static screen widget confirming routing works and displaying the localised app name.
 
@@ -109,12 +109,20 @@ A user changes the app language from Arabic to English (or vice versa). The enti
 
 ---
 
+## Clarifications
+
+### Session 2026-06-14
+
+- Q: Which dark colour should the native splash background use — `#1B1B1B` (neutral grey) or the project token? → A: `AppColors.green900` (`#0D1B13`) — the project's canonical dark page base; `#1B1B1B` was an incorrect placeholder.
+- Q: Should theme/locale preference be persisted across app restarts in this feature? → A: Yes — add `shared_preferences`, providers persist and survive cold launch.
+- Q: Should the OS launcher icon switch dynamically when the in-app theme is toggled? → A: No — static dark-variant icon always; light-variant asset bundled for future use; runtime launcher switching is out of scope.
+
 ## Assumptions
 
 - The project's canonical dark surface colour for splash backgrounds is already defined in `core/theme/` and will be reused; no new colour values are invented for this feature.
 - The Sprint logo/wordmark asset (SVG or PNG) already exists in the asset pipeline from the core foundation feature and can be referenced directly.
-- Adaptive icon support is limited to Android (foreground + background layers) and iOS (single PNG set); the "theme-switching icon" behaviour refers to providing dark/light variants via platform-specific asset declarations, not dynamic runtime icon replacement (which is OS-restricted).
-- Theme and locale provider values are stored in device local storage and survive app restarts; the persistence mechanism (shared_preferences or equivalent) is treated as an infrastructure detail in the data layer.
+- The app launcher icon is static (dark variant only). Both dark and light icon asset files are included in the bundle; dynamic runtime launcher-icon switching (swapping the OS launcher icon when the user toggles the in-app theme) is OS-restricted on iOS and Android without a plugin and is explicitly deferred to a future feature.
+- Theme and locale provider values are persisted via `shared_preferences` and survive app restarts. Persistence is wired in this feature (not deferred). The `shared_preferences` package will be added to `pubspec.yaml`.
 - A settings screen that exposes the theme and locale toggles to end users is **out of scope** for this feature; provider wiring is built but UI controls will appear in a future settings feature.
 - The login screen itself (authentication logic, form validation, backend calls) is **out of scope**; only a placeholder screen confirming navigation and localisation is required.
 - No backend, network calls, or authentication flows are involved in this feature.
