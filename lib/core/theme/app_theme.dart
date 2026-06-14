@@ -7,7 +7,7 @@ import 'package:sprint/core/theme/app_typography.dart';
 /// Usage: `MaterialApp(theme: AppTheme.dark(), ...)`
 abstract final class AppTheme {
   static ThemeData dark() {
-    final colorScheme = const ColorScheme(
+    const colorScheme = ColorScheme(
       brightness: Brightness.dark,
       // ── Primary (Sprint green) ──────────────────────────────────────────
       primary: AppColors.sprintGreen,
@@ -60,16 +60,14 @@ abstract final class AppTheme {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
-        titleTextStyle: AppTypography.h3.copyWith(
-          color: AppColors.textPrimary,
-        ),
+        titleTextStyle: AppTypography.h3.copyWith(color: AppColors.textPrimary),
       ),
 
       // ── Cards ──────────────────────────────────────────────────────────
-      cardTheme: CardThemeData(
+      cardTheme: const CardThemeData(
         color: AppColors.bgSurface,
         surfaceTintColor: Colors.transparent,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadius.lgAll,
           side: BorderSide(color: AppColors.border),
         ),
@@ -87,9 +85,7 @@ abstract final class AppTheme {
           textStyle: AppTypography.bodyLg.copyWith(
             fontWeight: AppTypography.bold,
           ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadius.mdAll,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
           minimumSize: const Size(double.infinity, 52),
           elevation: 0,
         ),
@@ -104,9 +100,7 @@ abstract final class AppTheme {
           textStyle: AppTypography.bodyLg.copyWith(
             fontWeight: AppTypography.extraBold,
           ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadius.mdAll,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
           minimumSize: const Size(double.infinity, 52),
           elevation: 0,
         ),
@@ -120,9 +114,7 @@ abstract final class AppTheme {
           textStyle: AppTypography.bodyLg.copyWith(
             fontWeight: AppTypography.bold,
           ),
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadius.mdAll,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
           minimumSize: const Size(double.infinity, 52),
         ),
       ),
@@ -132,9 +124,7 @@ abstract final class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColors.textSecondary,
           textStyle: AppTypography.body,
-          shape: const RoundedRectangleBorder(
-            borderRadius: AppRadius.mdAll,
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
         ),
       ),
 
@@ -146,28 +136,24 @@ abstract final class AppTheme {
           horizontal: 16,
           vertical: 14,
         ),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: AppRadius.mdAll,
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadius.mdAll,
-          borderSide: const BorderSide(color: AppColors.border),
+          borderSide: BorderSide(color: AppColors.border),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadius.mdAll,
-          borderSide: const BorderSide(color: AppColors.lime, width: 2),
+          borderSide: BorderSide(color: AppColors.lime, width: 2),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderRadius: AppRadius.mdAll,
-          borderSide: const BorderSide(color: AppColors.error),
+          borderSide: BorderSide(color: AppColors.error),
         ),
-        hintStyle: AppTypography.body.copyWith(
-          color: AppColors.textMuted,
-        ),
-        labelStyle: AppTypography.sm.copyWith(
-          color: AppColors.textSecondary,
-        ),
+        hintStyle: AppTypography.body.copyWith(color: AppColors.textMuted),
+        labelStyle: AppTypography.sm.copyWith(color: AppColors.textSecondary),
       ),
 
       // ── Bottom navigation ───────────────────────────────────────────────
@@ -185,9 +171,7 @@ abstract final class AppTheme {
         selectedColor: AppColors.lime,
         labelStyle: AppTypography.sm,
         side: const BorderSide(color: AppColors.border),
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadius.pillAll,
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.pillAll),
       ),
 
       // ── Divider ─────────────────────────────────────────────────────────

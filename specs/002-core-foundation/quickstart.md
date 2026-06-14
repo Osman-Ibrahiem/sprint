@@ -153,12 +153,12 @@ flutter test --reporter=expanded
 
 The foundation milestone is **complete** when all of the following are true:
 
-- [ ] `dart analyze` → zero errors, zero warnings
-- [ ] `dart format --set-exit-if-changed .` → exit code 0
-- [ ] `flutter test` → all smoke tests pass
-- [ ] App launches in Arabic RTL on web (Chrome), iOS simulator, and Android emulator
-- [ ] URL navigation to `/` and `/error` works on web
-- [ ] `lib/features/` is empty (no feature code committed to this branch)
-- [ ] `lib/core/theme/` contains only token-sourced values (no `Color(0x...)` literals outside `app_colors.dart`)
-- [ ] All ARB strings have `@` metadata entries
-- [ ] No hardcoded Arabic strings exist outside `app_ar.arb`
+- [X] `dart analyze` → zero errors, zero warnings *(verified 2026-06-14)*
+- [X] `dart format --set-exit-if-changed .` → exit code 0 *(verified 2026-06-14)*
+- [X] `flutter test` → all smoke tests pass — 10/10 *(verified 2026-06-14)*
+- [ ] App launches in Arabic RTL on web (Chrome), iOS simulator, and Android emulator *(requires manual device check)*
+- [ ] URL navigation to `/` and `/error` works on web *(requires manual device check)*
+- [X] `lib/features/` is empty (no feature code committed to this branch)
+- [X] `lib/core/theme/` contains only token-sourced values (no `Color(0x...)` literals outside `app_colors.dart`)
+- [X] All ARB strings have `@` metadata entries
+- [X] No hardcoded Arabic strings exist outside `app_ar.arb`
