@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sprint/core/l10n/app_localizations.dart';
 import 'package:sprint/core/router/app_routes.dart';
 import 'package:sprint/core/theme/app_colors.dart';
-import 'package:sprint/core/theme/app_typography.dart';
+import 'package:sprint/features/splash/presentation/widgets/splash_app_name.dart';
+import 'package:sprint/features/splash/presentation/widgets/splash_background.dart';
+import 'package:sprint/features/splash/presentation/widgets/splash_loading_bar.dart';
+import 'package:sprint/features/splash/presentation/widgets/splash_logo.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -17,149 +19,98 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _entryController;
-  late final Animation<double> _fadeUp;
-  Timer? _navigationTimer;
+  late final AnimationController _revealController;
+  late final Animation<double> _revealAnim;
+  bool _contentVisible = false;
+  Timer? _revealTimer;
+  Timer? _navTimer;
+
+  // Phase 1 (0–400ms): solid bg + centered logo, pixel-identical to native splash.
+  // Phase 2 (400ms+): gradient + app name + loading bar fade in.
+  static const Duration _transitionDelay = Duration(milliseconds: 400);
+  static const Duration _revealDuration = Duration(milliseconds: 600);
+  // Loading bar runs 1800ms from phase-2 start; navigate 100ms after it finishes.
+  static const Duration _navDelay = Duration(milliseconds: 2300);
 
   @override
   void initState() {
     super.initState();
-    _entryController = AnimationController(
-      duration: const Duration(milliseconds: 600),
+    _revealController = AnimationController(
+      duration: _revealDuration,
       vsync: this,
     );
-    _fadeUp = CurvedAnimation(
-      parent: _entryController,
+    _revealAnim = CurvedAnimation(
+      parent: _revealController,
       curve: Curves.easeOut,
     );
-    _entryController.forward();
 
-    _navigationTimer = Timer(const Duration(milliseconds: 3800), () {
-      if (mounted) context.go(AppRoutes.login);
+    _revealTimer = Timer(_transitionDelay, () {
+      if (mounted) {
+        setState(() => _contentVisible = true);
+        _revealController.forward();
+      }
+    });
+
+    _navTimer = Timer(_navDelay, () {
+     // if (mounted) context.go(AppRoutes.login);
     });
   }
 
   @override
   void dispose() {
-    _navigationTimer?.cancel();
-    _entryController.dispose();
+    _revealTimer?.cancel();
+    _navTimer?.cancel();
+    _revealController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
     return Scaffold(
       backgroundColor: AppColors.green900,
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          DecoratedBox(
-            position: DecorationPosition.foreground,
-            decoration: const BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment.center,
-                radius: 1.2,
-                colors: [
-                  AppColors.green700,
-                  AppColors.green900,
-                ],
-                stops: [0.0, 0.62],
-              ),
-            ),
-            child: Center(
-              child: FadeTransition(
-                opacity: _fadeUp,
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, 0.06),
-                    end: Offset.zero,
-                  ).animate(CurvedAnimation(
-                    parent: _entryController,
-                    curve: Curves.easeOut,
-                  )),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 118,
-                        height: 118,
-                        decoration: BoxDecoration(
-                          color: AppColors.sprintGreen,
-                          borderRadius: BorderRadius.circular(38),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x990F4C2F),
-                              blurRadius: 50,
-                              offset: Offset(0, 18),
-                            ),
-                          ],
-                        ),
-                        child: const Icon(
-                          Icons.bolt_rounded,
-                          size: 70,
-                          color: AppColors.lime,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        l10n.appName,
-                        style: AppTypography.display.copyWith(
-                          fontSize: 44,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        l10n.splashSubtitle,
-                        style: AppTypography.body.copyWith(
-                          fontWeight: AppTypography.semiBold,
-                          color: AppColors.green300,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          PositionedDirectional(
-            bottom: 80,
-            start: 0,
-            end: 0,
+          // Gradient overlay — invisible during phase 1, fades in with content.
+          FadeTransition(opacity: _revealAnim, child: const SplashBackground()),
+
+          // Logo starts at exact screen center (phase 1).
+          // AnimatedSize grows the text section below the logo, pushing it up
+          // smoothly as phase 2 reveals — no discrete position jump.
+          Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(2),
-                  child: SizedBox(
-                    width: 148,
-                    height: 4,
-                    child: TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0.08, end: 0.96),
-                      duration: const Duration(milliseconds: 1800),
-                      curve: Curves.linear,
-                      builder: (context, value, child) {
-                        return LinearProgressIndicator(
-                          value: value,
-                          backgroundColor: AppColors.lime.withAlpha(40),
-                          valueColor: const AlwaysStoppedAnimation(AppColors.lime),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  l10n.splashContinueHint,
-                  style: AppTypography.xs.copyWith(
-                    fontWeight: AppTypography.semiBold,
-                    color: AppColors.textSecondary,
-                  ),
+                const SplashLogo(),
+                AnimatedSize(
+                  duration: _revealDuration,
+                  curve: Curves.easeOut,
+                  child: _contentVisible
+                      ? FadeTransition(
+                          opacity: _revealAnim,
+                          child: const Padding(
+                            padding: EdgeInsets.only(top: 24),
+                            child: SplashAppName(),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                 ),
               ],
             ),
           ),
+
+          // Loading bar built only in phase 2 so TweenAnimationBuilder
+          // starts at t=400ms rather than t=0.
+          if (_contentVisible)
+            PositionedDirectional(
+              bottom: 80,
+              start: 0,
+              end: 0,
+              child: FadeTransition(
+                opacity: _revealAnim,
+                child: const Center(child: SplashLoadingBar()),
+              ),
+            ),
         ],
       ),
     );
