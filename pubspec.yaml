@@ -41,6 +41,7 @@ dev_dependencies:
   riverpod_generator: ^2.4.4
   freezed: ^2.5.7
   flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
@@ -51,6 +52,7 @@ flutter:
     - assets/fonts/Cairo/
     - assets/images/icons/
     - assets/splash/
+    - assets/icon/
 
   fonts:
     - family: Cairo
