@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen>
   late final AnimationController _phase2;
 
   // Phase 1: icon at 256dp matching native splash.
-  // Phase 2: icon shrinks to 96dp, text + glows + brackets fade in.
+  // Phase 2: icon shrinks to 160dp, text + glows + brackets fade in.
   static const double _kPhase1Size = 256;
-  static const double _kPhase2Size = 96;
+  static const double _kPhase2Size = 160;
 
   // 500ms hold so the user sees the phase-1 icon before the transition starts.
   static const Duration _kPhase1Hold = Duration(milliseconds: 500);
@@ -129,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Logo: animates from 256dp → 96dp over the first 600ms.
+                // Logo: animates from 256dp → 160dp over the first 600ms.
                 AnimatedBuilder(
                   animation: _logoSize,
                   builder: (context, _) => SplashIcon(size: _logoSize.value),
