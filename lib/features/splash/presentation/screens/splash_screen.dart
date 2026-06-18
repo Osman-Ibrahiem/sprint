@@ -4,9 +4,9 @@ import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_spacing.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_app_name.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_corner_brackets.dart';
+import 'package:sprint/features/splash/presentation/widgets/splash_footer.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_glow.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_icon.dart';
-import 'package:sprint/features/splash/presentation/widgets/splash_institution_badge.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -116,13 +116,6 @@ class _SplashScreenState extends State<SplashScreen>
                   animation: _logoSize,
                   builder: (context, _) => SplashIcon(size: _logoSize.value),
                 ),
-                // 24dp gap collapses to zero in phase 1 (logo is alone),
-                // then grows in sync with the content reveal.
-                SizeTransition(
-                  sizeFactor: _contentReveal,
-                  axisAlignment: -1.0,
-                  child: const SizedBox(height: AppSpacing.md),
-                ),
                 // Text + progress: fades and grows in from t=600ms.
                 // No blank SizedBox at the top so text appears immediately.
                 //
@@ -130,22 +123,17 @@ class _SplashScreenState extends State<SplashScreen>
                 // x-component to AlignmentDirectional(-1.0, …) = start.
                 // In RTL (Arabic) that resolves to Alignment(+1.0, …) =
                 // right-aligned, causing the 156.6 dp left offset seen in
-                // Flutter Inspector. Align(topCenter) is direction-agnostic
+                // Flutter Inspector. Align(center) is direction-agnostic
                 // and overrides the right-alignment while preserving the
                 // top-anchor needed for the grow-from-top clip animation.
                 SizeTransition(
                   sizeFactor: _contentReveal,
                   axisAlignment: -1.0,
                   child: Align(
-                    alignment: Alignment.topCenter,
+                    alignment: Alignment.center,
                     child: FadeTransition(
                       opacity: _contentReveal,
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SplashAppName(),
-                        ],
-                      ),
+                      child: const SplashAppName(),
                     ),
                   ),
                 ),
@@ -163,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen>
                 padding: const EdgeInsets.only(bottom: AppSpacing.xl),
                 child: FadeTransition(
                   opacity: _contentReveal,
-                  child: const Center(child: SplashInstitutionBadge()),
+                  child: const SplashFooter(),
                 ),
               ),
             ),
