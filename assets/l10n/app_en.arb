@@ -21,6 +21,21 @@
     "description": "Button label on error screen to navigate back to home"
   },
 
+  "splashTagline": "Sports Facility Booking System · Tanta University",
+  "@splashTagline": {
+    "description": "Tagline shown on the splash screen below the app name"
+  },
+
+  "splashUniversity": "Tanta University",
+  "@splashUniversity": {
+    "description": "University name shown in the splash institution badge"
+  },
+
+  "splashFaculty": "Faculty of Physical Education",
+  "@splashFaculty": {
+    "description": "Faculty name shown in the splash institution badge"
+  },
+
   "splashSubtitle": "Book your court, hassle-free ⚡",
   "@splashSubtitle": {
     "description": "Subtitle shown on the splash screen below the app name"

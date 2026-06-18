@@ -21,6 +21,21 @@
     "description": "Button label on error screen to navigate back to home"
   },
 
+  "splashTagline": "نظام حجز المنشآت الرياضية · جامعة طنطا",
+  "@splashTagline": {
+    "description": "Tagline shown on the splash screen below the app name"
+  },
+
+  "splashUniversity": "جامعة طنطا",
+  "@splashUniversity": {
+    "description": "University name shown in the splash institution badge"
+  },
+
+  "splashFaculty": "كلية التربية الرياضية",
+  "@splashFaculty": {
+    "description": "Faculty name shown in the splash institution badge"
+  },
+
   "splashSubtitle": "احجز ملعبك، من غير زحمة ⚡",
   "@splashSubtitle": {
     "description": "Subtitle shown on the splash screen below the app name"

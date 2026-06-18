@@ -122,6 +122,24 @@ abstract class AppLocalizations {
   /// **'العودة للرئيسية'**
   String get backToHome;
 
+  /// Tagline shown on the splash screen below the app name
+  ///
+  /// In ar, this message translates to:
+  /// **'نظام حجز المنشآت الرياضية · جامعة طنطا'**
+  String get splashTagline;
+
+  /// University name shown in the splash institution badge
+  ///
+  /// In ar, this message translates to:
+  /// **'جامعة طنطا'**
+  String get splashUniversity;
+
+  /// Faculty name shown in the splash institution badge
+  ///
+  /// In ar, this message translates to:
+  /// **'كلية التربية الرياضية'**
+  String get splashFaculty;
+
   /// Subtitle shown on the splash screen below the app name
   ///
   /// In ar, this message translates to:
