@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sprint/core/router/app_routes.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_spacing.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_app_name.dart';
@@ -9,7 +7,6 @@ import 'package:sprint/features/splash/presentation/widgets/splash_corner_bracke
 import 'package:sprint/features/splash/presentation/widgets/splash_glow.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_icon.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_institution_badge.dart';
-import 'package:sprint/features/splash/presentation/widgets/splash_progress_bar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,22 +28,17 @@ class _SplashScreenState extends State<SplashScreen>
   // 500ms hold so the user sees the phase-1 icon before the transition starts.
   static const Duration _kPhase1Hold = Duration(milliseconds: 500);
 
-  // Total phase-2 duration: 2800ms broken into four sequential stages.
+  // Total phase-2 duration: 2800ms broken into two sequential stages.
   static const Duration _kPhase2Duration = Duration(milliseconds: 2800);
 
   // Interval boundaries as fractions of 2800ms:
-  //   0 → 600ms  : logo shrinks 256 → 96dp
+  //   0 → 600ms  : logo shrinks 256 → 160dp
   //   600 → 1400ms: content (text, glows, brackets) fades + sizes in
-  //   1400 → 2600ms: progress bar fills 0 → 100%
-  //   2600 → 2800ms: check circle fades in, then navigate
   static const double _tLogoEnd = 600 / 2800;
   static const double _tContentEnd = 1400 / 2800;
-  static const double _tProgressEnd = 2600 / 2800;
 
   late final Animation<double> _logoSize;
   late final Animation<double> _contentReveal;
-  late final Animation<double> _progressFill;
-  late final Animation<double> _checkFade;
 
   @override
   void initState() {
@@ -63,16 +55,6 @@ class _SplashScreenState extends State<SplashScreen>
     _contentReveal = CurvedAnimation(
       parent: _phase2,
       curve: const Interval(_tLogoEnd, _tContentEnd, curve: Curves.easeOut),
-    );
-
-    _progressFill = CurvedAnimation(
-      parent: _phase2,
-      curve: const Interval(_tContentEnd, _tProgressEnd, curve: Curves.linear),
-    );
-
-    _checkFade = CurvedAnimation(
-      parent: _phase2,
-      curve: const Interval(_tProgressEnd, 1.0, curve: Curves.easeIn),
     );
 
     _phase2.addStatusListener((status) {
@@ -139,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen>
                 SizeTransition(
                   sizeFactor: _contentReveal,
                   axisAlignment: -1.0,
-                  child: const SizedBox(height: AppSpacing.xl),
+                  child: const SizedBox(height: AppSpacing.md),
                 ),
                 // Text + progress: fades and grows in from t=600ms.
                 // No blank SizedBox at the top so text appears immediately.
@@ -158,15 +140,10 @@ class _SplashScreenState extends State<SplashScreen>
                     alignment: Alignment.topCenter,
                     child: FadeTransition(
                       opacity: _contentReveal,
-                      child: Column(
+                      child: const Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const SplashAppName(),
-                          const SizedBox(height: AppSpacing.xl),
-                          SplashProgressBar(
-                            progressAnim: _progressFill,
-                            checkAnim: _checkFade,
-                          ),
+                          SplashAppName(),
                         ],
                       ),
                     ),

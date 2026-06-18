@@ -36,7 +36,7 @@
     "description": "Faculty name shown in the splash institution badge"
   },
 
-  "splashSubtitle": "احجز من غير زحمة",
+  "splashSubtitle": "احجز ملعبك، من غير زحمة ⚡",
   "@splashSubtitle": {
     "description": "Subtitle shown on the splash screen below the app name"
   },
