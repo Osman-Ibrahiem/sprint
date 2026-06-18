@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 
@@ -29,32 +31,20 @@ class SplashGlow extends StatelessWidget {
           ),
           child: const SizedBox.expand(),
         ),
-        // Small lime/olive glow — below the progress section.
-        //
-        // Figma node 18:39: left:36.75, top:604.38, width:320, height:120.
-        // Three-stop gradient (matches Figma SVG exactly):
-        //   stop 0:    rgba(204,244,43, 0.12)  — lime
-        //   stop 0.35: rgba(102,122,22, 0.06)  — darker olive (0x0F = ~6% alpha)
-        //   stop 0.7:  transparent
-        Positioned(
-          left: 36,
-          right: 36,
-          top: 604,
-          height: 120,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment.center,
-                radius: 1.0,
-                colors: [
-                  AppColors.lime.withValues(alpha: 0.12),
-                  const Color(0x0F666A16),
-                  const Color(0x00000000),
-                ],
-                stops: const [0.0, 0.35, 0.7],
+        // Elliptical lime glow — subtle shadow, lower-center of screen.
+        // sigmaX >> sigmaY ensures a wide flat ellipse, not a circle.
+        Align(
+          alignment: const Alignment(0, 0.48),
+          child: ImageFiltered(
+            imageFilter: ImageFilter.blur(sigmaX: 36, sigmaY: 14),
+            child: Container(
+              width: 100,
+              height: 14,
+              decoration: BoxDecoration(
+                color: AppColors.lime.withValues(alpha: 0.13),
+                borderRadius: BorderRadius.circular(100),
               ),
             ),
-            child: const SizedBox.expand(),
           ),
         ),
       ],
