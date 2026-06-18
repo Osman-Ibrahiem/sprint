@@ -120,9 +120,11 @@ class _SplashScreenState extends State<SplashScreen>
             child: const SplashCornerBrackets(),
           ),
 
-          // Main content: logo shrinks, text group grows in below it.
-          // Center re-centers the growing column so the logo lifts upward
-          // as the text appears — no explicit position math needed.
+          // One centered group: logo → gap → text, all in a single
+          // min-size Column under Center so the whole unit re-centers
+          // as content reveals. Gap gets its own SizeTransition so the
+          // text column never starts with blank space (which caused the
+          // visual disconnect between logo and text during the animation).
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -132,24 +134,41 @@ class _SplashScreenState extends State<SplashScreen>
                   animation: _logoSize,
                   builder: (context, _) => SplashIcon(size: _logoSize.value),
                 ),
-                // Phase-2 text stack: grows in height and fades in simultaneously
-                // starting at t=600ms, completing at t=1400ms.
+                // 24dp gap collapses to zero in phase 1 (logo is alone),
+                // then grows in sync with the content reveal.
                 SizeTransition(
                   sizeFactor: _contentReveal,
                   axisAlignment: -1.0,
-                  child: FadeTransition(
-                    opacity: _contentReveal,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(height: AppSpacing.xl),
-                        const SplashAppName(),
-                        const SizedBox(height: AppSpacing.xl),
-                        SplashProgressBar(
-                          progressAnim: _progressFill,
-                          checkAnim: _checkFade,
-                        ),
-                      ],
+                  child: const SizedBox(height: AppSpacing.xl),
+                ),
+                // Text + progress: fades and grows in from t=600ms.
+                // No blank SizedBox at the top so text appears immediately.
+                //
+                // SizeTransition(axis: vertical) hardcodes its internal Align
+                // x-component to AlignmentDirectional(-1.0, …) = start.
+                // In RTL (Arabic) that resolves to Alignment(+1.0, …) =
+                // right-aligned, causing the 156.6 dp left offset seen in
+                // Flutter Inspector. Align(topCenter) is direction-agnostic
+                // and overrides the right-alignment while preserving the
+                // top-anchor needed for the grow-from-top clip animation.
+                SizeTransition(
+                  sizeFactor: _contentReveal,
+                  axisAlignment: -1.0,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: FadeTransition(
+                      opacity: _contentReveal,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SplashAppName(),
+                          const SizedBox(height: AppSpacing.xl),
+                          SplashProgressBar(
+                            progressAnim: _progressFill,
+                            checkAnim: _checkFade,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
