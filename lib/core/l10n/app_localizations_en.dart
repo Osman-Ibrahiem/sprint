@@ -21,8 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get backToHome => 'Back to Home';
 
   @override
-  String get splashTagline =>
-      'Sports Facility Booking System · Tanta University';
+  String get splashTagline => 'Book hassle-free';
 
   @override
   String get splashUniversity => 'Tanta University';

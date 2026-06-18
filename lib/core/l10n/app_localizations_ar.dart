@@ -21,7 +21,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get backToHome => 'العودة للرئيسية';
 
   @override
-  String get splashTagline => 'نظام حجز المنشآت الرياضية · جامعة طنطا';
+  String get splashTagline => 'احجز من غير زحمة';
 
   @override
   String get splashUniversity => 'جامعة طنطا';

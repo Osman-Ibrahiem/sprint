@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// Tagline shown on the splash screen below the app name
   ///
   /// In ar, this message translates to:
-  /// **'نظام حجز المنشآت الرياضية · جامعة طنطا'**
+  /// **'احجز من غير زحمة'**
   String get splashTagline;
 
   /// University name shown in the splash institution badge
