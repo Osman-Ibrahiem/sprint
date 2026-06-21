@@ -32,7 +32,9 @@
 ## Notes
 
 - All 4 visual states (default, focus, error, loading) are covered by user stories.
-- RTL and responsive requirements are explicit in FR-008 and FR-009.
+- RTL and responsive requirements are explicit in FR-008 and FR-009 (updated to include scroll behavior).
 - Clean Architecture constraint (small widgets, presentation layer only) is captured in FR-012.
 - Localization and design token constraints captured in FR-010 and FR-011.
+- Accessibility semantics now captured in FR-014.
+- Clarification session 2026-06-21: resolved keyboard scroll behavior (A), Riverpod Notifier pattern (A), leading icon in identifier field (A), loading state auto-revert (A), accessibility scope (A).
 - One minor assumption to verify before planning: confirm bolt icon asset path is accessible.

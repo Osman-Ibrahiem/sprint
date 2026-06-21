@@ -81,7 +81,8 @@ A developer or designer previews the loading visual state of the login button af
 - What happens when the identifier field contains a very long email string? The field should scroll/ellipsis internally without breaking the layout.
 - What happens on extra-small viewports (< 320 dp)? Text and fields must not overflow — minimum padding must be maintained.
 - What happens when the device font scale is increased to 200%? The form must not overflow its container (use `textScaler` constraints if needed).
-- What happens in landscape orientation on mobile? The branding header should collapse or reduce so the form is still accessible without scrolling excessively.
+- What happens in landscape orientation on mobile? The screen uses a scrollable layout — the branding header scrolls off-screen and the form fields remain reachable by scrolling up.
+- What happens when the virtual keyboard appears? The screen layout is a `SingleChildScrollView` so content scrolls up; the branding header may scroll off but both input fields and the login button remain fully accessible without any layout reflow.
 
 ---
 
@@ -90,22 +91,23 @@ A developer or designer previews the loading visual state of the login button af
 ### Functional Requirements
 
 - **FR-001**: The screen MUST display a branding header at the top containing the bolt icon and the app name "سبرنت" using the Lime accent color on the dark background, consistent with the splash screen identity.
-- **FR-002**: The screen MUST display a single identifier input field that accepts email or phone number text without a toggle between modes. Hint text (placeholder) MUST read "الإيميل أو رقم الموبايل" in informal Arabic.
+- **FR-002**: The screen MUST display a single identifier input field that accepts email or phone number text without a toggle between modes. Hint text (placeholder) MUST read "الإيميل أو رقم الموبايل" in informal Arabic. The field MUST display a person/contact outline icon as a leading decoration, RTL-mirrored.
 - **FR-003**: The screen MUST display a password input field with obscured text by default and a show/hide toggle icon. Hint text MUST read "كلمة السر".
 - **FR-004**: The identifier field MUST display a Lime-accent border when focused and revert to the default border style when unfocused.
 - **FR-005**: The password field MUST display a Lime-accent border when focused, include a visibility-toggle icon that is RTL-mirrored, and toggle text visibility on icon tap.
 - **FR-006**: Both fields MUST support an error visual state: red border (theme error color) plus an Arabic error caption below the field. This state is triggered by a mock/static mechanism, not real validation.
-- **FR-007**: The screen MUST display a primary login button with the label "دخول". On tap, the button MUST enter a loading visual state (spinner replaces label) for a brief mock duration, then revert. No real submission occurs.
+- **FR-007**: The screen MUST display a primary login button with the label "دخول". On tap, the button MUST enter a loading visual state (spinner replaces label) for approximately 2 seconds via a single timed delay, then automatically revert to the default label state. No real submission occurs. The button is tappable again after the auto-revert completes.
 - **FR-008**: The layout MUST be RTL by default. All icons within input fields MUST be mirrored appropriately. Text MUST align right. The bolt icon in the branding header MUST respect RTL conventions.
-- **FR-009**: The screen MUST be responsive: on mobile (< 600 dp wide) it occupies full width with horizontal padding; on web (≥ 960 dp wide) the form is centered in a max-width container.
+- **FR-009**: The screen MUST be responsive: on mobile (< 600 dp wide) it occupies full width with horizontal padding; on web (≥ 960 dp wide) the form is centered in a max-width container. The entire screen content MUST be wrapped in a scrollable container so that when the virtual keyboard appears the form fields and login button remain fully accessible by scrolling — the branding header is allowed to scroll off-screen in this case.
 - **FR-010**: All colors MUST be sourced from the project's design token system (`AppColors` / `AppTheme` in `core/theme/`). Zero hardcoded color values are permitted.
 - **FR-011**: All text strings MUST be externalized via the project's localization system (`flutter_localizations` / `AppLocalizations`). No inline Arabic string literals in widget code.
 - **FR-012**: The screen MUST be implemented as a composition of small, single-responsibility widgets (brand header widget, identifier field widget, password field widget, login button widget) within the presentation layer. No monolithic screen widget.
 - **FR-013**: No Forgot Password link, social login buttons, or role selection UI MUST appear on this screen.
+- **FR-014**: The identifier field, password field, and login button MUST each carry an Arabic `semanticLabel` for screen reader accessibility (e.g., "حقل الإيميل أو رقم الموبايل", "حقل كلمة السر", "زرار الدخول"). The branding header and decorative icons MUST be excluded from the accessibility tree.
 
 ### Key Entities
 
-- **LoginFormState**: A UI-only state model holding: `identifierText`, `passwordText`, `isPasswordVisible` (bool), `identifierError` (nullable string), `passwordError` (nullable string), `isLoading` (bool). Drives visual rendering only — no domain logic.
+- **LoginFormState**: A UI-only state model holding: `identifierText`, `passwordText`, `isPasswordVisible` (bool), `identifierError` (nullable string), `passwordError` (nullable string), `isLoading` (bool). Drives visual rendering only — no domain logic. MUST be implemented as a `freezed` data class exposed through a `@riverpod`-annotated `Notifier` class (riverpod_annotation code-gen). No StatefulWidget or setState for this state.
 - **LoginBrandHeader**: A stateless widget encapsulating the bolt icon and app name branding element.
 - **LoginIdentifierField**: A stateless widget rendering the identifier input with focus/error visual states.
 - **LoginPasswordField**: A stateless widget rendering the password input with visibility toggle and focus/error visual states.
@@ -124,6 +126,18 @@ A developer or designer previews the loading visual state of the login button af
 - **SC-005**: Zero inline Arabic string literals exist in widget files — verified by checking all strings are routed through the localization system.
 - **SC-006**: The screen compiles with zero Dart analyzer errors or warnings.
 - **SC-007**: The login button mock loading cycle (tap → spinner → revert) completes visually within 2 seconds and produces no layout shift measurable by the developer.
+
+---
+
+## Clarifications
+
+### Session 2026-06-21
+
+- Q: When the virtual keyboard appears on mobile, how should the screen behave? → A: Scrollable layout — full screen wrapped in a SingleChildScrollView; branding header scrolls off, form fields and button remain accessible by scrolling up.
+- Q: Which Riverpod provider pattern should manage LoginFormState? → A: `@riverpod` annotated `Notifier` with code-gen (riverpod_annotation) — Riverpod 2.x, constitution-compliant.
+- Q: What leading icon should appear in the identifier input field? → A: Person/contact icon (generic outline person icon) — works for both email and phone, must be RTL-mirrored.
+- Q: How does the login button exit the loading state after a mock tap? → A: Auto-revert after ~2 seconds via a single timed delay — tap once, full cycle plays automatically with no additional interaction required.
+- Q: Are accessibility semantics required on this screen? → A: Yes — semantic labels on interactive elements only; identifier field, password field, and login button get Arabic semanticLabel; decorative icons and branding header are excluded from the accessibility tree.
 
 ---
 
