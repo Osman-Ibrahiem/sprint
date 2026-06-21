@@ -30,7 +30,7 @@ abstract final class AppTheme {
       surfaceContainerHighest: AppColors.green100,
       onSurfaceVariant: AppColors.ink500,
       outline: AppColors.green100,
-      outlineVariant: Color(0xFFE8F3EC),
+      outlineVariant: AppColors.green75,
       inverseSurface: AppColors.ink900,
       onInverseSurface: AppColors.green50,
       inversePrimary: AppColors.sprintGreen,

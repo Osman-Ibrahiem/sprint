@@ -16,9 +16,7 @@ class SplashAppName extends StatelessWidget {
         Text(
           l10n.appName,
           textAlign: TextAlign.center,
-          style: AppTypography.display.copyWith(
-            fontSize: 48,
-            height: 1.0,
+          style: AppTypography.displayXl.copyWith(
             color: AppColors.textPrimary,
             letterSpacing: -0.48,
           ),

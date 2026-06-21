@@ -30,12 +30,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get splashFaculty => 'كلية التربية الرياضية';
 
   @override
-  String get splashSubtitle => 'احجز ملعبك، من غير زحمة ⚡';
-
-  @override
-  String get splashContinueHint => 'اضغط للمتابعة';
-
-  @override
   String get loginTitle => 'أهلاً بيك في سبرنت';
 
   @override

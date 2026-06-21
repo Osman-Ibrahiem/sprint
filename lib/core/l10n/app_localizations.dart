@@ -140,18 +140,6 @@ abstract class AppLocalizations {
   /// **'كلية التربية الرياضية'**
   String get splashFaculty;
 
-  /// Subtitle shown on the splash screen below the app name
-  ///
-  /// In ar, this message translates to:
-  /// **'احجز ملعبك، من غير زحمة ⚡'**
-  String get splashSubtitle;
-
-  /// Hint text shown below the loading bar on the splash screen
-  ///
-  /// In ar, this message translates to:
-  /// **'اضغط للمتابعة'**
-  String get splashContinueHint;
-
   /// Heading text on the login placeholder screen
   ///
   /// In ar, this message translates to:

@@ -16,6 +16,7 @@ class SplashInstitutionBadge extends StatelessWidget {
       color: AppColors.textSecondary,
     );
     return Container(
+      // 17h/7v: intentional Figma spec — deliberately tighter than lg(16)/sm(8) grid tokens.
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 7),
       decoration: BoxDecoration(
         color: AppColors.sprintGreen.withValues(alpha: 0.2),

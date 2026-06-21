@@ -30,12 +30,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get splashFaculty => 'Faculty of Physical Education';
 
   @override
-  String get splashSubtitle => 'Book your court, hassle-free ⚡';
-
-  @override
-  String get splashContinueHint => 'Loading…';
-
-  @override
   String get loginTitle => 'Welcome to Sprint';
 
   @override

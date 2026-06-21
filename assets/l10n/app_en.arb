@@ -36,16 +36,6 @@
     "description": "Faculty name shown in the splash institution badge"
   },
 
-  "splashSubtitle": "Book your court, hassle-free ⚡",
-  "@splashSubtitle": {
-    "description": "Subtitle shown on the splash screen below the app name"
-  },
-
-  "splashContinueHint": "Loading…",
-  "@splashContinueHint": {
-    "description": "Hint text shown below the loading bar on the splash screen"
-  },
-
   "loginTitle": "Welcome to Sprint",
   "@loginTitle": {
     "description": "Heading text on the login placeholder screen"

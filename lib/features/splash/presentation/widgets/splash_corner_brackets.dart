@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sprint/core/theme/app_colors.dart';
+import 'package:sprint/core/theme/app_spacing.dart';
 
 class SplashCornerBrackets extends StatelessWidget {
   const SplashCornerBrackets({super.key});
@@ -10,23 +11,23 @@ class SplashCornerBrackets extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Positioned(
-          left: 24,
-          top: 24,
+          left: AppSpacing.xl,
+          top: AppSpacing.xl,
           child: _bracket(top: true, leading: true),
         ),
         Positioned(
-          right: 24,
-          top: 24,
+          right: AppSpacing.xl,
+          top: AppSpacing.xl,
           child: _bracket(top: true, leading: false),
         ),
         Positioned(
-          left: 24,
-          bottom: 24,
+          left: AppSpacing.xl,
+          bottom: AppSpacing.xl,
           child: _bracket(top: false, leading: true),
         ),
         Positioned(
-          right: 24,
-          bottom: 24,
+          right: AppSpacing.xl,
+          bottom: AppSpacing.xl,
           child: _bracket(top: false, leading: false),
         ),
       ],
@@ -39,8 +40,8 @@ class SplashCornerBrackets extends StatelessWidget {
       width: 1,
     );
     return SizedBox(
-      width: 24,
-      height: 24,
+      width: AppSpacing.xl,
+      height: AppSpacing.xl,
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border(

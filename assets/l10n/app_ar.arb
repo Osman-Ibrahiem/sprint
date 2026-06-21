@@ -36,16 +36,6 @@
     "description": "Faculty name shown in the splash institution badge"
   },
 
-  "splashSubtitle": "احجز ملعبك، من غير زحمة ⚡",
-  "@splashSubtitle": {
-    "description": "Subtitle shown on the splash screen below the app name"
-  },
-
-  "splashContinueHint": "اضغط للمتابعة",
-  "@splashContinueHint": {
-    "description": "Hint text shown below the loading bar on the splash screen"
-  },
-
   "loginTitle": "أهلاً بيك في سبرنت",
   "@loginTitle": {
     "description": "Heading text on the login placeholder screen"
