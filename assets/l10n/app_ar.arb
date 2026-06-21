@@ -19,5 +19,30 @@
   "backToHome": "العودة للرئيسية",
   "@backToHome": {
     "description": "Button label on error screen to navigate back to home"
+  },
+
+  "splashTagline": "احجز من غير زحمة",
+  "@splashTagline": {
+    "description": "Tagline shown on the splash screen below the app name"
+  },
+
+  "splashUniversity": "جامعة طنطا",
+  "@splashUniversity": {
+    "description": "University name shown in the splash institution badge"
+  },
+
+  "splashFaculty": "كلية التربية الرياضية",
+  "@splashFaculty": {
+    "description": "Faculty name shown in the splash institution badge"
+  },
+
+  "loginTitle": "أهلاً بيك في سبرنت",
+  "@loginTitle": {
+    "description": "Heading text on the login placeholder screen"
+  },
+
+  "loginSubtitle": "ابدأ حجزك دلوقتي",
+  "@loginSubtitle": {
+    "description": "Subheading text on the login placeholder screen"
   }
 }

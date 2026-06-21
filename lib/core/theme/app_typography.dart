@@ -32,6 +32,9 @@ abstract final class AppTypography {
   );
 
   // ── Named scale (mirrors CSS tokens) ────────────────────────────────────
+  /// 48px · Black — hero / splash overlay display
+  static TextStyle get displayXl => _s(48, black, height: 1.0);
+
   /// 40px · Black — splash / hero display
   static TextStyle get display => _s(40, black, height: 1.15);
 

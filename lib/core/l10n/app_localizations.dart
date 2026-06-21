@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_en.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +93,10 @@ abstract class AppLocalizations {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('ar')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
+    Locale('en'),
+  ];
 
   /// Application name displayed in the app bar
   ///
@@ -117,6 +121,36 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'العودة للرئيسية'**
   String get backToHome;
+
+  /// Tagline shown on the splash screen below the app name
+  ///
+  /// In ar, this message translates to:
+  /// **'احجز من غير زحمة'**
+  String get splashTagline;
+
+  /// University name shown in the splash institution badge
+  ///
+  /// In ar, this message translates to:
+  /// **'جامعة طنطا'**
+  String get splashUniversity;
+
+  /// Faculty name shown in the splash institution badge
+  ///
+  /// In ar, this message translates to:
+  /// **'كلية التربية الرياضية'**
+  String get splashFaculty;
+
+  /// Heading text on the login placeholder screen
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً بيك في سبرنت'**
+  String get loginTitle;
+
+  /// Subheading text on the login placeholder screen
+  ///
+  /// In ar, this message translates to:
+  /// **'ابدأ حجزك دلوقتي'**
+  String get loginSubtitle;
 }
 
 class _AppLocalizationsDelegate
@@ -130,7 +164,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['ar'].contains(locale.languageCode);
+      <String>['ar', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -141,6 +175,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'en':
+      return AppLocalizationsEn();
   }
 
   throw FlutterError(

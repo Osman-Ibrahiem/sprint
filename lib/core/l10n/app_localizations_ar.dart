@@ -19,4 +19,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get backToHome => 'العودة للرئيسية';
+
+  @override
+  String get splashTagline => 'احجز من غير زحمة';
+
+  @override
+  String get splashUniversity => 'جامعة طنطا';
+
+  @override
+  String get splashFaculty => 'كلية التربية الرياضية';
+
+  @override
+  String get loginTitle => 'أهلاً بيك في سبرنت';
+
+  @override
+  String get loginSubtitle => 'ابدأ حجزك دلوقتي';
 }

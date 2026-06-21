@@ -1,0 +1,48 @@
+{
+  "@@locale": "en",
+
+  "appName": "Sprint",
+  "@appName": {
+    "description": "Application name displayed in the app bar"
+  },
+
+  "errorPageTitle": "Error",
+  "@errorPageTitle": {
+    "description": "Title shown on the 404/error screen"
+  },
+
+  "errorPageMessage": "Page not found",
+  "@errorPageMessage": {
+    "description": "Body text on the 404/error screen"
+  },
+
+  "backToHome": "Back to Home",
+  "@backToHome": {
+    "description": "Button label on error screen to navigate back to home"
+  },
+
+  "splashTagline": "Book hassle-free",
+  "@splashTagline": {
+    "description": "Tagline shown on the splash screen below the app name"
+  },
+
+  "splashUniversity": "Tanta University",
+  "@splashUniversity": {
+    "description": "University name shown in the splash institution badge"
+  },
+
+  "splashFaculty": "Faculty of Physical Education",
+  "@splashFaculty": {
+    "description": "Faculty name shown in the splash institution badge"
+  },
+
+  "loginTitle": "Welcome to Sprint",
+  "@loginTitle": {
+    "description": "Heading text on the login placeholder screen"
+  },
+
+  "loginSubtitle": "Start booking now",
+  "@loginSubtitle": {
+    "description": "Subheading text on the login placeholder screen"
+  }
+}
