@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _phase2.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
-       // context.go(AppRoutes.login);
+        // context.go(AppRoutes.login);
       }
     });
   }
@@ -71,8 +71,10 @@ class _SplashScreenState extends State<SplashScreen>
     _precacheStarted = true;
     // Decode the splash image into cache before removing the native overlay so
     // the icon is present on the exact frame the native splash disappears.
-    precacheImage(const AssetImage('assets/splash/splash_image.png'), context)
-        .whenComplete(() {
+    precacheImage(
+      const AssetImage('assets/splash/splash_image.png'),
+      context,
+    ).whenComplete(() {
       FlutterNativeSplash.remove();
       Future.delayed(_kPhase1Hold, () {
         if (mounted) _phase2.forward();
@@ -93,15 +95,18 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Atmospheric glow layers — fade in with the content reveal.
+          // Stage 2 — atmospheric green glow fades in with content reveal.
           FadeTransition(opacity: _contentReveal, child: const SplashGlow()),
 
-          // Corner bracket decorations — fade in with the content reveal.
+          // Stage 2 — corner bracket decorations.
           FadeTransition(
             opacity: _contentReveal,
             child: const SplashCornerBrackets(),
           ),
 
+          // Stage 1+2 — bolt shrinks 256→160dp (stage 1),
+          //             then content reveals below it (stage 2).
+          //
           // One centered group: logo → gap → text, all in a single
           // min-size Column under Center so the whole unit re-centers
           // as content reveals. Gap gets its own SizeTransition so the
@@ -141,7 +146,7 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
 
-          // Institution badge — fades in with content, respects safe area bottom.
+          // Stage 2 — institution badge fades in with content, respects safe area.
           Positioned(
             bottom: 0,
             left: 0,

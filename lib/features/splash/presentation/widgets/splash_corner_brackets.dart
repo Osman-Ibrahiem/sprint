@@ -9,10 +9,26 @@ class SplashCornerBrackets extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Positioned(left: 24, top: 24, child: _bracket(top: true, leading: true)),
-        Positioned(right: 24, top: 24, child: _bracket(top: true, leading: false)),
-        Positioned(left: 24, bottom: 24, child: _bracket(top: false, leading: true)),
-        Positioned(right: 24, bottom: 24, child: _bracket(top: false, leading: false)),
+        Positioned(
+          left: 24,
+          top: 24,
+          child: _bracket(top: true, leading: true),
+        ),
+        Positioned(
+          right: 24,
+          top: 24,
+          child: _bracket(top: true, leading: false),
+        ),
+        Positioned(
+          left: 24,
+          bottom: 24,
+          child: _bracket(top: false, leading: true),
+        ),
+        Positioned(
+          right: 24,
+          bottom: 24,
+          child: _bracket(top: false, leading: false),
+        ),
       ],
     );
   }
