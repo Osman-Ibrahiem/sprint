@@ -1,0 +1,65 @@
+name: Deploy web to GitHub Pages (staging)
+
+# Staging deploy: runs when code lands on `develop`.
+# Builds Flutter web with the project-site base href and publishes to Pages.
+# NOTE: master / custom-domain production deploy is intentionally NOT handled
+# here — it will be a separate workflow with base-href "/".
+on:
+  push:
+    branches: [develop]
+  # Allows manually re-running the deploy from the Actions tab.
+  workflow_dispatch:
+
+# Permissions required by the modern Pages deployment (actions/deploy-pages).
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent overlapping deploys; let an in-progress run finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Build the web bundle. base-href MUST match the project-site subpath
+      # (Osman-Ibrahiem.github.io/sprint/) or assets and routing will break.
+      - name: Build web
+        run: flutter build web --release --base-href "/sprint/"
+
+      # go_router uses URL-based paths. GitHub Pages serves static files, so a
+      # hard refresh on a deep link (e.g. /sprint/booking) would 404. Copying
+      # index.html to 404.html makes Pages serve the SPA shell for any unknown
+      # path, letting go_router resolve the route on the client.
+      - name: Add SPA 404 fallback
+        run: cp build/web/index.html build/web/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
