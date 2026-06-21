@@ -1,0 +1,23 @@
+{
+  "@@locale": "ar",
+
+  "appName": "سبرنت",
+  "@appName": {
+    "description": "Application name displayed in the app bar"
+  },
+
+  "errorPageTitle": "خطأ",
+  "@errorPageTitle": {
+    "description": "Title shown on the 404/error screen"
+  },
+
+  "errorPageMessage": "الصفحة غير موجودة",
+  "@errorPageMessage": {
+    "description": "Body text on the 404/error screen"
+  },
+
+  "backToHome": "العودة للرئيسية",
+  "@backToHome": {
+    "description": "Button label on error screen to navigate back to home"
+  }
+}
