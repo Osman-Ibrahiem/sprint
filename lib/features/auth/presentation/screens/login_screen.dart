@@ -22,7 +22,10 @@ class LoginScreen extends StatelessWidget {
     final media = MediaQuery.of(context);
     final tokens = AdaptiveTokens.of(SizeClass.fromWidth(media.size.width));
     final flex = FlexPosture.of(media);
-    final split = VerticalSplit.of(media);
+    final rawSplit = VerticalSplit.of(media);
+    final split = rawSplit != null && _halvesFit(rawSplit, media.size.width)
+        ? rawSplit
+        : null;
 
     final Widget body;
     if (split != null) {
@@ -41,6 +44,10 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+
+bool _halvesFit(VerticalSplit split, double width) =>
+    split.leftWidth >= LoginLayout.minSplitPane &&
+    width - split.rightStart >= LoginLayout.minSplitPane;
 
 class _SinglePane extends StatelessWidget {
   const _SinglePane();

@@ -19,4 +19,8 @@ abstract final class LoginLayout {
 
   /// Brand-pane glow radius, as a fraction of its (pane-wide) square.
   static const double brandGlowRadius = 0.5;
+
+  /// Narrowest screen half that still gets its own pane when a vertical hinge
+  /// splits the window; below this the normal layout is used.
+  static const double minSplitPane = 320;
 }

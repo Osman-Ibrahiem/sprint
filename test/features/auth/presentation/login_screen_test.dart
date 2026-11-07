@@ -284,29 +284,49 @@ void main() {
       expect(form - header, lessThan(300));
     });
 
-    testWidgets('vertical hinge: panes sit on each screen, nothing crosses it', (
+    testWidgets('vertical hinge on a narrow window falls back to one pane', (
       tester,
     ) async {
-      // Dual-screen landscape: 890 wide, 20 dp hinge in the middle.
       await pumpAt(
         tester,
-        const Size(890, 626),
+        const Size(450, 800),
         features: const [
           DisplayFeature(
-            bounds: Rect.fromLTWH(435, 0, 20, 626),
+            bounds: Rect.fromLTWH(215, 0, 20, 800),
             type: DisplayFeatureType.hinge,
             state: DisplayFeatureState.postureFlat,
           ),
         ],
       );
-      // RTL: brand (start) on the right screen, form on the left screen.
-      final brand = tester.getRect(find.byType(LoginBrandPane));
-      final form = tester.getRect(find.byType(LoginForm));
-      expect(brand.left, greaterThanOrEqualTo(455));
-      expect(brand.right, 890);
-      expect(form.right, lessThanOrEqualTo(435));
-      expect(form.left, greaterThanOrEqualTo(0));
+      expect(find.byType(LoginBrandPane), findsNothing);
+      expect(find.byType(LoginBrandHeader), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
+
+    testWidgets(
+      'vertical hinge: panes sit on each screen, nothing crosses it',
+      (tester) async {
+        // Dual-screen landscape: 890 wide, 20 dp hinge in the middle.
+        await pumpAt(
+          tester,
+          const Size(890, 626),
+          features: const [
+            DisplayFeature(
+              bounds: Rect.fromLTWH(435, 0, 20, 626),
+              type: DisplayFeatureType.hinge,
+              state: DisplayFeatureState.postureFlat,
+            ),
+          ],
+        );
+        // RTL: brand (start) on the right screen, form on the left screen.
+        final brand = tester.getRect(find.byType(LoginBrandPane));
+        final form = tester.getRect(find.byType(LoginForm));
+        expect(brand.left, greaterThanOrEqualTo(455));
+        expect(brand.right, 890);
+        expect(form.right, lessThanOrEqualTo(435));
+        expect(form.left, greaterThanOrEqualTo(0));
+        expect(tester.takeException(), isNull);
+      },
+    );
   });
 }
