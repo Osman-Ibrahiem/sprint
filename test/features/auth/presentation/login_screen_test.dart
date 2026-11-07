@@ -125,7 +125,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      container.read(loginFormNotifierProvider.notifier).mockSetError();
+      container.read(loginFormProvider.notifier).mockSetError();
       await tester.pump();
 
       expect(

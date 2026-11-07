@@ -5,7 +5,7 @@ part 'login_form_notifier.freezed.dart';
 part 'login_form_notifier.g.dart';
 
 @freezed
-class LoginFormState with _$LoginFormState {
+abstract class LoginFormState with _$LoginFormState {
   const factory LoginFormState({
     @Default('') String identifierText,
     @Default('') String passwordText,
@@ -36,6 +36,7 @@ class LoginFormNotifier extends _$LoginFormNotifier {
   Future<void> mockLogin() async {
     state = state.copyWith(isLoading: true);
     await Future<void>.delayed(const Duration(milliseconds: 1800));
+    if (!ref.mounted) return;
     state = state.copyWith(isLoading: false);
   }
 

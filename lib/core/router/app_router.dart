@@ -9,7 +9,7 @@ import 'package:sprint/features/splash/presentation/screens/splash_screen.dart';
 part 'app_router.g.dart';
 
 @Riverpod(keepAlive: true)
-GoRouter appRouter(AppRouterRef ref) {
+GoRouter appRouter(Ref ref) {
   return GoRouter(
     initialLocation: AppRoutes.initial,
     errorBuilder: (context, state) => const ErrorScreen(),

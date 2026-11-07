@@ -17,7 +17,7 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      expect(container.read(themeModeNotifierProvider), ThemeMode.dark);
+      expect(container.read(themeModeProvider), ThemeMode.dark);
     });
 
     test('build() with saved "light" returns ThemeMode.light', () async {
@@ -30,7 +30,7 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      expect(container.read(themeModeNotifierProvider), ThemeMode.light);
+      expect(container.read(themeModeProvider), ThemeMode.light);
     });
 
     test('setTheme(ThemeMode.light) updates state and persists', () async {
@@ -43,8 +43,8 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      container.read(themeModeNotifierProvider.notifier).setTheme(ThemeMode.light);
-      expect(container.read(themeModeNotifierProvider), ThemeMode.light);
+      container.read(themeModeProvider.notifier).setTheme(ThemeMode.light);
+      expect(container.read(themeModeProvider), ThemeMode.light);
 
       expect(prefs.getString('sprint_theme_mode'), 'light');
     });
@@ -59,8 +59,8 @@ void main() {
       );
       addTearDown(container.dispose);
 
-      container.read(themeModeNotifierProvider.notifier).setTheme(ThemeMode.system);
-      expect(container.read(themeModeNotifierProvider), ThemeMode.dark);
+      container.read(themeModeProvider.notifier).setTheme(ThemeMode.system);
+      expect(container.read(themeModeProvider), ThemeMode.dark);
     });
   });
 }

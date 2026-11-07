@@ -8,6 +8,7 @@ void main() {
 
     setUp(() {
       container = ProviderContainer();
+      container.listen(loginFormProvider, (_, _) {});
     });
 
     tearDown(() {
@@ -15,9 +16,9 @@ void main() {
     });
 
     LoginFormNotifier notifier() =>
-        container.read(loginFormNotifierProvider.notifier);
+        container.read(loginFormProvider.notifier);
 
-    LoginFormState state() => container.read(loginFormNotifierProvider);
+    LoginFormState state() => container.read(loginFormProvider);
 
     test('initial state has all defaults', () {
       expect(state().identifierText, '');

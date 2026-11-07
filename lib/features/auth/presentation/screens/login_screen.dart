@@ -12,8 +12,8 @@ class LoginScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(loginFormNotifierProvider);
-    final notifier = ref.read(loginFormNotifierProvider.notifier);
+    final state = ref.watch(loginFormProvider);
+    final notifier = ref.read(loginFormProvider.notifier);
     final screenHeight = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
