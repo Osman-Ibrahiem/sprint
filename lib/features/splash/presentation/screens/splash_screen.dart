@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sprint/core/router/app_routes.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_spacing.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_app_name.dart';
@@ -59,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _phase2.addStatusListener((status) {
       if (status == AnimationStatus.completed && mounted) {
-        // context.go(AppRoutes.login);
+        context.go(AppRoutes.login);
       }
     });
   }

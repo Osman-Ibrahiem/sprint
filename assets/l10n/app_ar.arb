@@ -44,5 +44,55 @@
   "loginSubtitle": "ابدأ حجزك دلوقتي",
   "@loginSubtitle": {
     "description": "Subheading text on the login placeholder screen"
+  },
+
+  "loginIdentifierHint": "الإيميل أو رقم الموبايل",
+  "@loginIdentifierHint": {
+    "description": "Placeholder hint text for the identifier (email or phone) input field on the login screen"
+  },
+
+  "loginPasswordHint": "كلمة السر",
+  "@loginPasswordHint": {
+    "description": "Placeholder hint text for the password input field on the login screen"
+  },
+
+  "loginButton": "دخول",
+  "@loginButton": {
+    "description": "Label for the primary login button"
+  },
+
+  "loginIdentifierError": "يرجى إدخال الإيميل أو رقم الموبايل",
+  "@loginIdentifierError": {
+    "description": "Validation error caption shown below the identifier field"
+  },
+
+  "loginPasswordError": "يرجى إدخال كلمة السر",
+  "@loginPasswordError": {
+    "description": "Validation error caption shown below the password field"
+  },
+
+  "loginIdentifierSemantic": "حقل الإيميل أو رقم الموبايل",
+  "@loginIdentifierSemantic": {
+    "description": "Accessibility semantic label for the identifier input field"
+  },
+
+  "loginPasswordSemantic": "حقل كلمة السر",
+  "@loginPasswordSemantic": {
+    "description": "Accessibility semantic label for the password input field"
+  },
+
+  "loginButtonSemantic": "زرار الدخول",
+  "@loginButtonSemantic": {
+    "description": "Accessibility semantic label for the login button"
+  },
+
+  "loginPasswordShow": "إظهار كلمة السر",
+  "@loginPasswordShow": {
+    "description": "Semantic label for the password visibility toggle icon when password is hidden"
+  },
+
+  "loginPasswordHide": "إخفاء كلمة السر",
+  "@loginPasswordHide": {
+    "description": "Semantic label for the password visibility toggle icon when password is visible"
   }
 }

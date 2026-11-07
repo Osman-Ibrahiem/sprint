@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sprint/core/presentation/screens/error_screen.dart';
 import 'package:sprint/core/presentation/screens/home_shell_screen.dart';
 import 'package:sprint/core/router/app_routes.dart';
-import 'package:sprint/features/auth/presentation/screens/login_placeholder_screen.dart';
+import 'package:sprint/features/auth/presentation/screens/login_screen.dart';
 import 'package:sprint/features/splash/presentation/screens/splash_screen.dart';
 
 part 'app_router.g.dart';
@@ -22,7 +22,7 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: AppRoutes.login,
         name: 'login',
-        builder: (context, state) => const LoginPlaceholderScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: AppRoutes.home,

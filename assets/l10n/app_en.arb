@@ -44,5 +44,55 @@
   "loginSubtitle": "Start booking now",
   "@loginSubtitle": {
     "description": "Subheading text on the login placeholder screen"
+  },
+
+  "loginIdentifierHint": "Email or phone number",
+  "@loginIdentifierHint": {
+    "description": "Placeholder hint text for the identifier (email or phone) input field on the login screen"
+  },
+
+  "loginPasswordHint": "Password",
+  "@loginPasswordHint": {
+    "description": "Placeholder hint text for the password input field on the login screen"
+  },
+
+  "loginButton": "Sign in",
+  "@loginButton": {
+    "description": "Label for the primary login button"
+  },
+
+  "loginIdentifierError": "Please enter your email or phone",
+  "@loginIdentifierError": {
+    "description": "Validation error caption shown below the identifier field"
+  },
+
+  "loginPasswordError": "Please enter your password",
+  "@loginPasswordError": {
+    "description": "Validation error caption shown below the password field"
+  },
+
+  "loginIdentifierSemantic": "Email or phone number field",
+  "@loginIdentifierSemantic": {
+    "description": "Accessibility semantic label for the identifier input field"
+  },
+
+  "loginPasswordSemantic": "Password field",
+  "@loginPasswordSemantic": {
+    "description": "Accessibility semantic label for the password input field"
+  },
+
+  "loginButtonSemantic": "Sign in button",
+  "@loginButtonSemantic": {
+    "description": "Accessibility semantic label for the login button"
+  },
+
+  "loginPasswordShow": "Show password",
+  "@loginPasswordShow": {
+    "description": "Semantic label for the password visibility toggle icon when password is hidden"
+  },
+
+  "loginPasswordHide": "Hide password",
+  "@loginPasswordHide": {
+    "description": "Semantic label for the password visibility toggle icon when password is visible"
   }
 }
