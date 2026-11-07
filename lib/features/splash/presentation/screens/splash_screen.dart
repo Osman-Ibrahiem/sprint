@@ -1,9 +1,12 @@
+import 'dart:ui' show lerpDouble;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sprint/core/adaptive/adaptive_tokens.dart';
+import 'package:sprint/core/adaptive/size_class.dart';
 import 'package:sprint/core/router/app_routes.dart';
 import 'package:sprint/core/theme/app_colors.dart';
-import 'package:sprint/core/theme/app_spacing.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_app_name.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_corner_brackets.dart';
 import 'package:sprint/features/splash/presentation/widgets/splash_footer.dart';
@@ -23,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen>
   late final AnimationController _phase2;
 
   // Phase 1: icon at 256dp matching native splash.
-  // Phase 2: icon shrinks to 160dp, text + glows + brackets fade in.
+  // Phase 2: icon shrinks to the size-class logo size (160/200/240, less on
+  // short windows), text + glows + brackets fade in.
   static const double _kPhase1Size = 256;
-  static const double _kPhase2Size = 160;
 
   // 500ms hold so the user sees the phase-1 icon before the transition starts.
   static const Duration _kPhase1Hold = Duration(milliseconds: 500);
@@ -39,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
   static const double _tLogoEnd = 600 / 2800;
   static const double _tContentEnd = 1400 / 2800;
 
-  late final Animation<double> _logoSize;
+  late final Animation<double> _logoT;
   late final Animation<double> _contentReveal;
 
   @override
@@ -47,11 +50,9 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _phase2 = AnimationController(duration: _kPhase2Duration, vsync: this);
 
-    _logoSize = Tween<double>(begin: _kPhase1Size, end: _kPhase2Size).animate(
-      CurvedAnimation(
-        parent: _phase2,
-        curve: const Interval(0.0, _tLogoEnd, curve: Curves.easeInOut),
-      ),
+    _logoT = CurvedAnimation(
+      parent: _phase2,
+      curve: const Interval(0.0, _tLogoEnd, curve: Curves.easeInOut),
     );
 
     _contentReveal = CurvedAnimation(
@@ -92,6 +93,11 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final tokens = AdaptiveTokens.of(SizeClass.fromWidth(size.width));
+    final logoEnd = SplashLimits.logoSize(tokens.splashLogoSize, size.height);
+    final showSpinner = !SplashLimits.isShort(size.height);
+
     return Scaffold(
       backgroundColor: AppColors.green900,
       body: Stack(
@@ -120,28 +126,22 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 // Logo: animates from 256dp → 160dp over the first 600ms.
                 AnimatedBuilder(
-                  animation: _logoSize,
-                  builder: (context, _) => SplashIcon(size: _logoSize.value),
+                  animation: _logoT,
+                  builder: (context, _) => SplashIcon(
+                    size: lerpDouble(_kPhase1Size, logoEnd, _logoT.value)!,
+                  ),
                 ),
                 // Text + progress: fades and grows in from t=600ms.
                 // No blank SizedBox at the top so text appears immediately.
                 //
-                // SizeTransition(axis: vertical) hardcodes its internal Align
-                // x-component to AlignmentDirectional(-1.0, …) = start.
-                // In RTL (Arabic) that resolves to Alignment(+1.0, …) =
-                // right-aligned, causing the 156.6 dp left offset seen in
-                // Flutter Inspector. Align(center) is direction-agnostic
-                // and overrides the right-alignment while preserving the
-                // top-anchor needed for the grow-from-top clip animation.
+                // alignment: topCenter anchors the grow-from-top clip and is
+                // direction-agnostic (no RTL offset).
                 SizeTransition(
                   sizeFactor: _contentReveal,
-                  axisAlignment: -1.0,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: FadeTransition(
-                      opacity: _contentReveal,
-                      child: const SplashAppName(),
-                    ),
+                  alignment: Alignment.topCenter,
+                  child: FadeTransition(
+                    opacity: _contentReveal,
+                    child: const SplashAppName(),
                   ),
                 ),
               ],
@@ -155,10 +155,10 @@ class _SplashScreenState extends State<SplashScreen>
             right: 0,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.xl),
+                padding: EdgeInsets.only(bottom: tokens.splashEdgeInset),
                 child: FadeTransition(
                   opacity: _contentReveal,
-                  child: const SplashFooter(),
+                  child: SplashFooter(showSpinner: showSpinner),
                 ),
               ),
             ),

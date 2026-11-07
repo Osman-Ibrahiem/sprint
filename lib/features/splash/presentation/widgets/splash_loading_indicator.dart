@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sprint/core/adaptive/adaptive_metrics.dart';
+import 'package:sprint/core/presentation/widgets/adaptive/adaptive_spinner.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 
 class SplashLoadingIndicator extends StatelessWidget {
@@ -6,13 +8,9 @@ class SplashLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 20,
-      height: 20,
-      child: CircularProgressIndicator(
-        strokeWidth: 1.5,
-        color: AppColors.lime.withValues(alpha: 0.6),
-      ),
+    return const AdaptiveSpinner(
+      color: AppColors.accentAlpha60,
+      strokeWidth: SpinnerMetrics.materialStrokeThin,
     );
   }
 }

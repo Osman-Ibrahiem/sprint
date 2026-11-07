@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sprint/core/adaptive/adaptive_metrics.dart';
+import 'package:sprint/core/adaptive/app_icons.dart';
+import 'package:sprint/core/adaptive/app_platform.dart';
 import 'package:sprint/core/l10n/app_localizations.dart';
-import 'package:sprint/core/theme/app_colors.dart';
-import 'package:sprint/core/theme/app_radius.dart';
+import 'package:sprint/core/presentation/widgets/adaptive/adaptive_text_field.dart';
 
 class LoginPasswordField extends StatelessWidget {
   const LoginPasswordField({
@@ -22,33 +24,25 @@ class LoginPasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final box = FieldMetrics.of(AppPlatform.of(context)).trailingBox;
 
-    return Semantics(
-      label: l10n.loginPasswordSemantic,
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        obscureText: !isVisible,
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          hintText: l10n.loginPasswordHint,
-          suffixIcon: IconButton(
-            icon: Icon(
-              isVisible
-                  ? Icons.visibility_outlined
-                  : Icons.visibility_off_outlined,
-            ),
-            tooltip: isVisible
-                ? l10n.loginPasswordHide
-                : l10n.loginPasswordShow,
-            onPressed: onToggleVisibility,
-          ),
-          errorText: errorText,
-          focusedErrorBorder: const OutlineInputBorder(
-            borderRadius: AppRadius.mdAll,
-            borderSide: BorderSide(color: AppColors.error, width: 2),
-          ),
+    return AdaptiveTextField(
+      controller: controller,
+      onChanged: onChanged,
+      hintText: l10n.loginPasswordHint,
+      semanticLabel: l10n.loginPasswordSemantic,
+      errorText: errorText,
+      obscureText: !isVisible,
+      textInputAction: TextInputAction.done,
+      leading: AppIcons.lock(context),
+      trailing: IconButton(
+        padding: EdgeInsets.zero,
+        constraints: BoxConstraints.tight(Size.square(box)),
+        icon: Icon(
+          isVisible ? AppIcons.eye(context) : AppIcons.eyeSlash(context),
         ),
+        tooltip: isVisible ? l10n.loginPasswordHide : l10n.loginPasswordShow,
+        onPressed: onToggleVisibility,
       ),
     );
   }

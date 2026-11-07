@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sprint/core/adaptive/adaptive_typography.dart';
+import 'package:sprint/core/adaptive/pane_scope.dart';
 import 'package:sprint/core/l10n/app_localizations.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_spacing.dart';
@@ -10,13 +12,14 @@ class SplashAppName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final type = AdaptiveTypography.of(PaneScope.of(context));
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           l10n.appName,
           textAlign: TextAlign.center,
-          style: AppTypography.displayXl.copyWith(
+          style: type.displayXl.copyWith(
             color: AppColors.textPrimary,
             letterSpacing: -0.48,
           ),
@@ -25,7 +28,7 @@ class SplashAppName extends StatelessWidget {
         Text(
           l10n.splashTagline,
           textAlign: TextAlign.center,
-          style: AppTypography.sm.copyWith(
+          style: type.sm.copyWith(
             fontWeight: AppTypography.medium,
             color: AppColors.textSecondary,
             letterSpacing: 0.56,
