@@ -22,9 +22,12 @@ class LoginScreen extends StatelessWidget {
     final media = MediaQuery.of(context);
     final tokens = AdaptiveTokens.of(SizeClass.fromWidth(media.size.width));
     final flex = FlexPosture.of(media);
+    final split = VerticalSplit.of(media);
 
     final Widget body;
-    if (tokens.isTwoPane) {
+    if (split != null) {
+      body = _SplitPanes(split: split, width: media.size.width);
+    } else if (tokens.isTwoPane) {
       body = _TwoPane(tokens: tokens, width: media.size.width);
     } else if (flex != null) {
       body = _FlexPane(posture: flex);
@@ -78,6 +81,47 @@ class _TwoPane extends StatelessWidget {
         const Expanded(child: LoginBrandPane()),
         SizedBox(
           width: formPane,
+          child: const PaneScope(
+            child: SafeArea(
+              child: _FormScroll(
+                children: [
+                  LoginHeading(),
+                  SizedBox(height: LoginLayout.headingToForm),
+                  LoginForm(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Brand pane and form pane placed on the two screens of a dual-screen device,
+/// leaving the hinge gap empty. The brand pane takes the start screen.
+class _SplitPanes extends StatelessWidget {
+  const _SplitPanes({required this.split, required this.width});
+
+  final VerticalSplit split;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    final leftWidth = split.leftWidth;
+    final rightWidth = width - split.rightStart;
+    final gap = split.rightStart - split.leftWidth;
+
+    return Row(
+      children: [
+        SizedBox(
+          width: rtl ? rightWidth : leftWidth,
+          child: const LoginBrandPane(),
+        ),
+        SizedBox(width: gap),
+        SizedBox(
+          width: rtl ? leftWidth : rightWidth,
           child: const PaneScope(
             child: SafeArea(
               child: _FormScroll(

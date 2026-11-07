@@ -267,14 +267,14 @@ void main() {
       expect(form, greaterThanOrEqualTo(460));
     });
 
-    testWidgets('flat hinge is ignored', (tester) async {
+    testWidgets('flat seamless fold is ignored', (tester) async {
       await pumpAt(
         tester,
         const Size(412, 900),
         features: const [
           DisplayFeature(
-            bounds: Rect.fromLTWH(0, 440, 412, 20),
-            type: DisplayFeatureType.hinge,
+            bounds: Rect.fromLTWH(0, 440, 412, 0),
+            type: DisplayFeatureType.fold,
             state: DisplayFeatureState.postureFlat,
           ),
         ],
@@ -282,6 +282,31 @@ void main() {
       final header = tester.getTopLeft(find.byType(LoginBrandHeader)).dy;
       final form = tester.getTopLeft(find.byType(LoginForm)).dy;
       expect(form - header, lessThan(300));
+    });
+
+    testWidgets('vertical hinge: panes sit on each screen, nothing crosses it', (
+      tester,
+    ) async {
+      // Dual-screen landscape: 890 wide, 20 dp hinge in the middle.
+      await pumpAt(
+        tester,
+        const Size(890, 626),
+        features: const [
+          DisplayFeature(
+            bounds: Rect.fromLTWH(435, 0, 20, 626),
+            type: DisplayFeatureType.hinge,
+            state: DisplayFeatureState.postureFlat,
+          ),
+        ],
+      );
+      // RTL: brand (start) on the right screen, form on the left screen.
+      final brand = tester.getRect(find.byType(LoginBrandPane));
+      final form = tester.getRect(find.byType(LoginForm));
+      expect(brand.left, greaterThanOrEqualTo(455));
+      expect(brand.right, 890);
+      expect(form.right, lessThanOrEqualTo(435));
+      expect(form.left, greaterThanOrEqualTo(0));
+      expect(tester.takeException(), isNull);
     });
   });
 }
