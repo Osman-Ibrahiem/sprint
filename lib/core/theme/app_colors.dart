@@ -60,4 +60,6 @@ abstract final class AppColors {
   static const Color onPrimary = lime; // text on green primary button
   static const Color overlay = Color(0xA80D1B13); // rgba(13,27,19,0.66)
   static const Color focusRing = Color(0x8DCCF42B); // rgba(204,244,43,0.55)
+  static const Color accentAlpha40 = Color(0x66CCF42B); // lime @ 40%
+  static const Color accentAlpha60 = Color(0x99CCF42B); // lime @ 60%
 }

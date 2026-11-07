@@ -32,6 +32,7 @@ dependencies:
 
   # Splash screen — runtime API (preserve/remove) used in main.dart and SplashScreen
   flutter_native_splash: ^2.4.7
+  cupertino_icons: ^2.0.0
 
 dev_dependencies:
   flutter_test:
