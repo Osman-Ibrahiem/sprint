@@ -4,9 +4,18 @@
 
 **Created**: 2026-06-21
 
-**Status**: Draft
+**Status**: Draft (amended by 005)
 
 **Input**: Login screen visual interface — UI-only, no backend or logic wiring.
+
+> **Amended by [005-adaptive-platform-ui](../005-adaptive-platform-ui/spec.md) — 2026-11-07.**
+> The Login screen now uses the adaptive foundation (size classes, platform-native controls,
+> two panes from 840 dp). Superseded items are marked *[superseded by 005]* below; the
+> full deviation list is in 005 § Deviations. Everything not marked still applies.
+> - FR-002 / FR-003 / FR-004 / FR-005 / FR-006 / FR-007: behaviour kept; look is per platform (Apple vs Material) via adaptive widgets.
+> - FR-001: bolt is the traced vector `BoltMark`, not `Icons.bolt_rounded`.
+> - FR-009: replaced by 005 FR-010 (one pane < 840 dp, two panes ≥ 840 dp).
+> - Password field gains a leading lock icon; visibility toggle sits at the end side.
 
 ---
 
@@ -90,15 +99,15 @@ A developer or designer previews the loading visual state of the login button af
 
 ### Functional Requirements
 
-- **FR-001**: The screen MUST display a branding header at the top containing the bolt icon and the app name "سبرنت" using the Lime accent color on the dark background, consistent with the splash screen identity.
+- **FR-001** *[bolt amended by 005 FR-009]*: The screen MUST display a branding header at the top containing the bolt icon and the app name "سبرنت" using the Lime accent color on the dark background, consistent with the splash screen identity.
 - **FR-002**: The screen MUST display a single identifier input field that accepts email or phone number text without a toggle between modes. Hint text (placeholder) MUST read "الإيميل أو رقم الموبايل" in informal Arabic. The field MUST display a person/contact outline icon as a leading decoration, RTL-mirrored.
 - **FR-003**: The screen MUST display a password input field with obscured text by default and a show/hide toggle icon. Hint text MUST read "كلمة السر".
 - **FR-004**: The identifier field MUST display a Lime-accent border when focused and revert to the default border style when unfocused.
-- **FR-005**: The password field MUST display a Lime-accent border when focused, include a visibility-toggle icon that is RTL-mirrored, and toggle text visibility on icon tap.
+- **FR-005** *[toggle on the end side; see 005]*: The password field MUST display a Lime-accent border when focused, include a visibility-toggle icon that is RTL-mirrored, and toggle text visibility on icon tap.
 - **FR-006**: Both fields MUST support an error visual state: red border (theme error color) plus an Arabic error caption below the field. This state is triggered by a mock/static mechanism, not real validation.
 - **FR-007**: The screen MUST display a primary login button with the label "دخول". On tap, the button MUST enter a loading visual state (spinner replaces label) for approximately 2 seconds via a single timed delay, then automatically revert to the default label state. No real submission occurs. The button is tappable again after the auto-revert completes.
 - **FR-008**: The layout MUST be RTL by default. All icons within input fields MUST be mirrored appropriately. Text MUST align right. The bolt icon in the branding header MUST respect RTL conventions.
-- **FR-009**: The screen MUST be responsive: on mobile (< 600 dp wide) it occupies full width with horizontal padding; on web (≥ 960 dp wide) the form is centered in a max-width container. The entire screen content MUST be wrapped in a scrollable container so that when the virtual keyboard appears the form fields and login button remain fully accessible by scrolling — the branding header is allowed to scroll off-screen in this case.
+- **FR-009** *[superseded by 005 FR-010]*: The screen MUST be responsive: on mobile (< 600 dp wide) it occupies full width with horizontal padding; on web (≥ 960 dp wide) the form is centered in a max-width container. The entire screen content MUST be wrapped in a scrollable container so that when the virtual keyboard appears the form fields and login button remain fully accessible by scrolling — the branding header is allowed to scroll off-screen in this case.
 - **FR-010**: All colors MUST be sourced from the project's design token system (`AppColors` / `AppTheme` in `core/theme/`). Zero hardcoded color values are permitted.
 - **FR-011**: All text strings MUST be externalized via the project's localization system (`flutter_localizations` / `AppLocalizations`). No inline Arabic string literals in widget code.
 - **FR-012**: The screen MUST be implemented as a composition of small, single-responsibility widgets (brand header widget, identifier field widget, password field widget, login button widget) within the presentation layer. No monolithic screen widget.

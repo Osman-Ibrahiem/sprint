@@ -1,9 +1,12 @@
 <!--
   Sync Impact Report
   ==================
-  Version change: 1.0.0 → 1.1.0
+  Version change: 1.1.0 → 1.2.0
   Modified principles: None
-  Added sections:
+  Added principles:
+    - VI. Adaptive-First Layout
+    - VII. Platform-Adaptive UI
+  Earlier (1.1.0) added sections:
     - "Domain Business Rules" (§ VI) — Sprint-specific invariants governing
       slot management, booking flows, ticketing, pricing, and asset control.
   Removed sections: None
@@ -20,6 +23,9 @@
       no specific changes needed)
   Follow-up TODOs:
     - TODO(RATIFICATION_DATE): Original adoption date unknown. Set when known.
+  Follow-up TODOs (1.2.0):
+    - plan-template.md Constitution Check should list principles VI and VII.
+    - Source: specs/005-adaptive-platform-ui.
 -->
 
 # Sprint Constitution
@@ -76,6 +82,36 @@ Rationale: Modules can be developed, tested, and reasoned about independently.
 - Performance-sensitive operations (large lists, images, animations) MUST use `const` constructors,
   `ListView.builder`, `ImageCache`, and `RepaintBoundary` as appropriate.
 Rationale: Ensures the app remains responsive, maintainable, and idiomatic on mobile platforms.
+
+### VI. Adaptive-First Layout
+Every screen MUST be built for all window size classes, not for one device.
+- Size classes are compact (<600), medium (600–839), expanded (840–1199), large (≥1200) dp;
+  layout, margins, gutters, max content width, pane count and type sizes come from the
+  shared adaptive tokens (`core/adaptive/`), never from per-screen numbers or device checks.
+- Window class decides structure (panes, navigation type); inside a pane, sizing follows the
+  pane's own width (`PaneScope`).
+- Content MUST scroll, respect safe areas and keyboard insets, and handle foldable hinges
+  without overflow at any width from 320 dp up.
+- New screens MUST NOT introduce their own breakpoints.
+- `PaneScope` is a layout-environment `InheritedWidget` (like `MediaQuery`/`Theme`), not
+  application state; it is the documented exception to Principle II's InheritedWidget ban.
+Rationale: one codebase serves phones, tablets, foldables and the web; ad-hoc breakpoints
+drift and break.
+
+### VII. Platform-Adaptive UI
+Form controls and chrome MUST follow the platform's visual language while keeping the Sprint
+dark/lime identity.
+- The look (Apple vs Material) is derived once from the theme's target platform
+  (`AppPlatform`); widgets MUST NOT read the OS directly.
+- Shared controls (text field, filled button, spinner, icons) live in
+  `core/presentation/widgets/adaptive/` and are the only way screens build these controls.
+- Numbers (radii, heights, borders, icon sizes) come from the Figma component sets and live
+  in adaptive metrics tokens; where code and Figma differ, Figma wins and the difference is
+  recorded.
+- A build-time override (`SPRINT_PLATFORM`) MUST remain available so both looks can be
+  checked on any machine.
+Rationale: platform-familiar controls reduce friction while a single set of tokens keeps the
+brand consistent.
 
 ## Domain Business Rules
 
@@ -184,4 +220,4 @@ Amendments require:
 "Constitution Check" section verifying alignment. Complexity deviations must be documented
 and justified.
 
-**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-06-14
+**Version**: 1.2.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-11-07

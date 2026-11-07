@@ -16,6 +16,12 @@ criteria only."
 > no user stories. The "done when" criteria below replace acceptance scenarios. Individual
 > feature specs depend on this foundation being in place.
 
+> **Note (2026-11-07)**: Adaptive layout, per-class tokens and platform-native controls are
+> specified in [005-adaptive-platform-ui](../005-adaptive-platform-ui/spec.md). Where a theme
+> or token decision here conflicts with 005 (e.g. fixed `screenPad` 24 for screen margins,
+> single Material field/button style), it is **superseded by 005**; the constants stay for
+> non-screen uses.
+
 ---
 
 ## Requirements *(mandatory)*

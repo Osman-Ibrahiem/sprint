@@ -8,6 +8,11 @@
 
 **Input**: User description: "Feature: app-identity — Bilingual support (Arabic default, English secondary) via ARB files; dual theme (dark default, light secondary) via Riverpod ThemeMode provider; app name 'سبرنت' (ar) / 'Sprint' (en); app icon variants switching with theme; native and Flutter splash screens pixel-identical and seamless; navigates to login screen placeholder after splash."
 
+> **Note (2026-11-07)**: Splash sizing is amended by [005-adaptive-platform-ui](../005-adaptive-platform-ui/spec.md)
+> (FR-014): logo 160/200/240 dp by size class, corner brackets inside the safe area, adaptive
+> spinner, and no spinner with a capped logo on windows shorter than 600 dp. The animation
+> timing and the native-to-Flutter handoff are unchanged.
+
 ---
 
 ## User Scenarios & Testing *(mandatory)*
