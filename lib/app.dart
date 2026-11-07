@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sprint/core/adaptive/hinge_override.dart';
 import 'package:sprint/core/adaptive/platform_override.dart';
 import 'package:sprint/core/l10n/app_localizations.dart';
 import 'package:sprint/core/providers/locale_provider.dart';
@@ -22,6 +23,13 @@ class App extends ConsumerWidget {
       darkTheme: AppTheme.dark().copyWith(platform: platform),
       themeMode: themeMode,
       locale: locale,
+      builder: (context, child) => MediaQuery(
+        data: HingeOverride.apply(
+          MediaQuery.of(context),
+          HingeOverride.current,
+        ),
+        child: child!,
+      ),
       routerConfig: ref.watch(appRouterProvider),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
