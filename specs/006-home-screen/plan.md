@@ -1,6 +1,6 @@
 # Implementation Plan: Home Screen UI (Guest and Booker)
 
-**Branch**: `claude/home-screen-d508af` | **Date**: 2026-11-08 | **Spec**: [spec.md](spec.md)
+**Branch**: `feature/home-screen` | **Date**: 2026-11-08 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `/specs/006-home-screen/spec.md`
 

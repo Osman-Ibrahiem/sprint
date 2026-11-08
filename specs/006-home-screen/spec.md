@@ -1,6 +1,6 @@
 # Feature Specification: Home Screen UI (Guest and Booker)
 
-**Feature Branch**: `claude/home-screen-d508af` (merges into `develop`, never `main`)
+**Feature Branch**: `feature/home-screen` (merges into `develop`, never `main`)
 
 **Created**: 2026-11-08
 

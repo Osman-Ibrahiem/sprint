@@ -32,4 +32,4 @@
 ## Notes
 
 - SC-004 names "web and phone simulator" verification, which is a delivery gate from the task brief, not an implementation detail.
-- The `before_specify` git hook (creates a branch) was skipped on purpose: the work stays on `claude/home-screen-d508af`.
+- The `before_specify` git hook (creates a branch) was skipped on purpose: the work stays on `feature/home-screen`.

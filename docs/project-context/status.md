@@ -8,7 +8,7 @@ Update or delete this file as the project moves. Check `git log` and `specs/` fo
 - CI/CD live: `develop` deploys to GitHub Pages. `master`/production deploy is deferred.
 - The project runs on Android, iOS, and web.
 
-- Home screen (spec 006, guest + booker, mock data) is built on `claude/home-screen-d508af`; open `/home` (guest) or `/home?session=booker`. Verified on web and iOS simulator.
+- Home screen (spec 006, guest + booker, mock data) is built on `feature/home-screen`; open `/home` (guest) or `/home?session=booker`. Verified on web and iOS simulator.
 
 ## Open questions
 1. **Which Figma file is canonical?** Two keys appear in the chats: `jDJkupRwurbY5DoUZOG8dF` (22-screen UI file built 2026-06-09) and `WU6HvS85C8F8U0f468VWVf` (screen designs used during splash and login work). Confirm with the owner and record the answer in `CLAUDE.md`.
