@@ -17,6 +17,8 @@ If something here disagrees with those, the constitution/specs/code win. Flag th
 | `brand-and-voice.md` | writing UI, copy, or error messages; checking visual rules |
 | `workflow-and-lessons.md` | starting any task: git flow, tool split, regressions to avoid |
 | `status.md` | needing the current state, open PRs, or open questions |
+| `thesis-research-plan.md` | writing a PRD, user stories or a spec: the registered research plan (problem, objective, population, tools, steps), transcribed |
+| `thesis-alignment.md` | checking a feature or business rule against the research plan: gaps, open questions for the doctor |
 
 ## Source chats (claude.ai, Sprint Project)
 
