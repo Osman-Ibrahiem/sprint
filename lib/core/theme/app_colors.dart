@@ -18,8 +18,8 @@ abstract final class AppColors {
   static const Color green500 = Color(0xFF5EA87A); // secondary text / icons
   static const Color green300 = Color(0xFFA8D8BA); // light borders / dividers
   static const Color green100 = Color(0xFFD0E8D8); // light-mode border
-  static const Color green75  = Color(0xFFE8F3EC); // light-mode outline variant
-  static const Color green50  = Color(0xFFF8FFF9); // lightest / light page base
+  static const Color green75 = Color(0xFFE8F3EC); // light-mode outline variant
+  static const Color green50 = Color(0xFFF8FFF9); // lightest / light page base
 
   // ── True neutrals ────────────────────────────────────────────────────────
   static const Color ink900 = Color(0xFF1A1A1A); // text-primary on light
@@ -60,4 +60,6 @@ abstract final class AppColors {
   static const Color onPrimary = lime; // text on green primary button
   static const Color overlay = Color(0xA80D1B13); // rgba(13,27,19,0.66)
   static const Color focusRing = Color(0x8DCCF42B); // rgba(204,244,43,0.55)
+  static const Color accentAlpha40 = Color(0x66CCF42B); // lime @ 40%
+  static const Color accentAlpha60 = Color(0x99CCF42B); // lime @ 60%
 }

@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 
 class SplashGlow extends StatelessWidget {
-  const SplashGlow({super.key});
+  const SplashGlow({this.radius = defaultRadius, super.key});
+
+  /// Gradient radius as a fraction of the box's shortest side.
+  final double radius;
+
+  /// Splash value: the gradient reaches past the screen edges.
+  static const double defaultRadius = 0.864;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class SplashGlow extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: RadialGradient(
           center: Alignment.center,
-          radius: 0.864,
+          radius: radius,
           colors: [
             AppColors.sprintGreen.withValues(alpha: 0.40),
             AppColors.sprintGreen.withValues(alpha: 0.22),

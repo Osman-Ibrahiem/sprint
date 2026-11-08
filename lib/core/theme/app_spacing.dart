@@ -12,7 +12,8 @@ abstract final class AppSpacing {
   static const double xxxl = 48.0;
   static const double xxxxl = 64.0;
 
-  /// Default horizontal screen padding.
+  /// Fixed 24 dp padding for non-screen uses. Screens use the responsive
+  /// margin: `PaneScope.tokensOf(context).margin`.
   static const double screenPad = xl; // 24
 
   /// Gap between major page sections.

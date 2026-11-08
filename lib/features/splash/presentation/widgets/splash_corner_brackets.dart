@@ -1,33 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:sprint/core/adaptive/pane_scope.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_spacing.dart';
 
+/// Four corner brackets, inset from the edges by the safe area plus the
+/// size-class edge inset (Figma `splash/edge-inset`).
 class SplashCornerBrackets extends StatelessWidget {
   const SplashCornerBrackets({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final inset = PaneScope.tokensOf(context).splashEdgeInset;
+    final safe = MediaQuery.paddingOf(context);
+    final left = safe.left + inset;
+    final right = safe.right + inset;
+    final top = safe.top + inset;
+    final bottom = safe.bottom + inset;
+
     return Stack(
       fit: StackFit.expand,
       children: [
         Positioned(
-          left: AppSpacing.xl,
-          top: AppSpacing.xl,
+          left: left,
+          top: top,
           child: _bracket(top: true, leading: true),
         ),
         Positioned(
-          right: AppSpacing.xl,
-          top: AppSpacing.xl,
+          right: right,
+          top: top,
           child: _bracket(top: true, leading: false),
         ),
         Positioned(
-          left: AppSpacing.xl,
-          bottom: AppSpacing.xl,
+          left: left,
+          bottom: bottom,
           child: _bracket(top: false, leading: true),
         ),
         Positioned(
-          right: AppSpacing.xl,
-          bottom: AppSpacing.xl,
+          right: right,
+          bottom: bottom,
           child: _bracket(top: false, leading: false),
         ),
       ],

@@ -16,6 +16,8 @@ class ThemeModeNotifier extends _$ThemeModeNotifier {
   void setTheme(ThemeMode mode) {
     if (mode == ThemeMode.system) return;
     state = mode;
-    ref.read(sharedPreferencesProvider).setString('sprint_theme_mode', mode.name);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('sprint_theme_mode', mode.name);
   }
 }

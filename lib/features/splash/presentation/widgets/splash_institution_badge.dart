@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sprint/core/adaptive/adaptive_typography.dart';
+import 'package:sprint/core/adaptive/pane_scope.dart';
 import 'package:sprint/core/l10n/app_localizations.dart';
 import 'package:sprint/core/theme/app_colors.dart';
 import 'package:sprint/core/theme/app_radius.dart';
@@ -11,7 +13,7 @@ class SplashInstitutionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final labelStyle = AppTypography.xs.copyWith(
+    final labelStyle = AdaptiveTypography.of(PaneScope.of(context)).xs.copyWith(
       fontWeight: AppTypography.semiBold,
       color: AppColors.textSecondary,
     );

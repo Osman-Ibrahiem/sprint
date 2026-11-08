@@ -34,4 +34,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get loginSubtitle => 'ابدأ حجزك دلوقتي';
+
+  @override
+  String get loginIdentifierHint => 'الإيميل أو رقم الموبايل';
+
+  @override
+  String get loginPasswordHint => 'كلمة السر';
+
+  @override
+  String get loginButton => 'دخول';
+
+  @override
+  String get loginIdentifierError => 'يرجى إدخال الإيميل أو رقم الموبايل';
+
+  @override
+  String get loginPasswordError => 'يرجى إدخال كلمة السر';
+
+  @override
+  String get loginIdentifierSemantic => 'حقل الإيميل أو رقم الموبايل';
+
+  @override
+  String get loginPasswordSemantic => 'حقل كلمة السر';
+
+  @override
+  String get loginButtonSemantic => 'زرار الدخول';
+
+  @override
+  String get loginPasswordShow => 'إظهار كلمة السر';
+
+  @override
+  String get loginPasswordHide => 'إخفاء كلمة السر';
 }

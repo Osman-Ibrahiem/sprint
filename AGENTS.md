@@ -43,6 +43,15 @@ Sprint is a digital governance system for sports facility management at Tanta Un
    - `/speckit-tasks`
    - `/speckit-implement`
 
+## Extended project context
+Background from the original design chats is in docs/project-context/ (start with README.md).
+The constitution, specs/, and lib/core/theme/ remain the source of truth; if they conflict with these docs, flag it.
+Read on demand, not every session:
+- docs/project-context/product-and-ux.md  (user flow, UX decisions, screen inventory, login decisions, deferred items)
+- docs/project-context/brand-and-voice.md  (brand rules, Egyptian-Arabic tone of voice)
+- docs/project-context/workflow-and-lessons.md  (git flow, tool split, regressions to avoid)
+- docs/project-context/status.md  (current state and open questions)
+
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan

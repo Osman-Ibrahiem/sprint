@@ -156,8 +156,8 @@ The foundation milestone is **complete** when all of the following are true:
 - [X] `dart analyze` → zero errors, zero warnings *(verified 2026-06-14)*
 - [X] `dart format --set-exit-if-changed .` → exit code 0 *(verified 2026-06-14)*
 - [X] `flutter test` → all smoke tests pass — 10/10 *(verified 2026-06-14)*
-- [ ] App launches in Arabic RTL on web (Chrome), iOS simulator, and Android emulator *(requires manual device check)*
-- [ ] URL navigation to `/` and `/error` works on web *(requires manual device check)*
+- [X] App launches in Arabic RTL on web (Chrome), iOS simulator, and Android emulator *(verified 2026-11-08)*
+- [X] URL navigation to `/` and `/error` works on web *(verified 2026-11-08, after fixing the native-splash deep-link bug)*
 - [X] `lib/features/` is empty (no feature code committed to this branch)
 - [X] `lib/core/theme/` contains only token-sourced values (no `Color(0x...)` literals outside `app_colors.dart`)
 - [X] All ARB strings have `@` metadata entries

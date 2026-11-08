@@ -11,40 +11,34 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       final container = ProviderContainer(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-        ],
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       );
       addTearDown(container.dispose);
 
-      expect(container.read(localeNotifierProvider), const Locale('ar'));
+      expect(container.read(localeProvider), const Locale('ar'));
     });
 
     test('build() with saved "en" returns Locale("en")', () async {
       SharedPreferences.setMockInitialValues({'sprint_locale': 'en'});
       final prefs = await SharedPreferences.getInstance();
       final container = ProviderContainer(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-        ],
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       );
       addTearDown(container.dispose);
 
-      expect(container.read(localeNotifierProvider), const Locale('en'));
+      expect(container.read(localeProvider), const Locale('en'));
     });
 
     test('setLocale(Locale("en")) updates state and persists', () async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       final container = ProviderContainer(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-        ],
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       );
       addTearDown(container.dispose);
 
-      container.read(localeNotifierProvider.notifier).setLocale(const Locale('en'));
-      expect(container.read(localeNotifierProvider), const Locale('en'));
+      container.read(localeProvider.notifier).setLocale(const Locale('en'));
+      expect(container.read(localeProvider), const Locale('en'));
 
       expect(prefs.getString('sprint_locale'), 'en');
     });
@@ -53,17 +47,17 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       final container = ProviderContainer(
-        overrides: [
-          sharedPreferencesProvider.overrideWithValue(prefs),
-        ],
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
       );
       addTearDown(container.dispose);
 
       expect(
-        () => container.read(localeNotifierProvider.notifier).setLocale(const Locale('fr')),
+        () => container
+            .read(localeProvider.notifier)
+            .setLocale(const Locale('fr')),
         throwsA(isA<AssertionError>()),
       );
-      expect(container.read(localeNotifierProvider), const Locale('ar'));
+      expect(container.read(localeProvider), const Locale('ar'));
     });
   });
 }

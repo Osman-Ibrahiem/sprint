@@ -19,6 +19,8 @@ class LocaleNotifier extends _$LocaleNotifier {
       return;
     }
     state = locale;
-    ref.read(sharedPreferencesProvider).setString('sprint_locale', locale.languageCode);
+    ref
+        .read(sharedPreferencesProvider)
+        .setString('sprint_locale', locale.languageCode);
   }
 }

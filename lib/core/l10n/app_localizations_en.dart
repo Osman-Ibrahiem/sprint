@@ -34,4 +34,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginSubtitle => 'Start booking now';
+
+  @override
+  String get loginIdentifierHint => 'Email or phone number';
+
+  @override
+  String get loginPasswordHint => 'Password';
+
+  @override
+  String get loginButton => 'Sign in';
+
+  @override
+  String get loginIdentifierError => 'Please enter your email or phone';
+
+  @override
+  String get loginPasswordError => 'Please enter your password';
+
+  @override
+  String get loginIdentifierSemantic => 'Email or phone number field';
+
+  @override
+  String get loginPasswordSemantic => 'Password field';
+
+  @override
+  String get loginButtonSemantic => 'Sign in button';
+
+  @override
+  String get loginPasswordShow => 'Show password';
+
+  @override
+  String get loginPasswordHide => 'Hide password';
 }

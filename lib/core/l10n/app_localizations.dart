@@ -151,6 +151,66 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'ابدأ حجزك دلوقتي'**
   String get loginSubtitle;
+
+  /// Placeholder hint text for the identifier (email or phone) input field on the login screen
+  ///
+  /// In ar, this message translates to:
+  /// **'الإيميل أو رقم الموبايل'**
+  String get loginIdentifierHint;
+
+  /// Placeholder hint text for the password input field on the login screen
+  ///
+  /// In ar, this message translates to:
+  /// **'كلمة السر'**
+  String get loginPasswordHint;
+
+  /// Label for the primary login button
+  ///
+  /// In ar, this message translates to:
+  /// **'دخول'**
+  String get loginButton;
+
+  /// Validation error caption shown below the identifier field
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى إدخال الإيميل أو رقم الموبايل'**
+  String get loginIdentifierError;
+
+  /// Validation error caption shown below the password field
+  ///
+  /// In ar, this message translates to:
+  /// **'يرجى إدخال كلمة السر'**
+  String get loginPasswordError;
+
+  /// Accessibility semantic label for the identifier input field
+  ///
+  /// In ar, this message translates to:
+  /// **'حقل الإيميل أو رقم الموبايل'**
+  String get loginIdentifierSemantic;
+
+  /// Accessibility semantic label for the password input field
+  ///
+  /// In ar, this message translates to:
+  /// **'حقل كلمة السر'**
+  String get loginPasswordSemantic;
+
+  /// Accessibility semantic label for the login button
+  ///
+  /// In ar, this message translates to:
+  /// **'زرار الدخول'**
+  String get loginButtonSemantic;
+
+  /// Semantic label for the password visibility toggle icon when password is hidden
+  ///
+  /// In ar, this message translates to:
+  /// **'إظهار كلمة السر'**
+  String get loginPasswordShow;
+
+  /// Semantic label for the password visibility toggle icon when password is visible
+  ///
+  /// In ar, this message translates to:
+  /// **'إخفاء كلمة السر'**
+  String get loginPasswordHide;
 }
 
 class _AppLocalizationsDelegate
