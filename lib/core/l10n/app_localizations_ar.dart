@@ -64,4 +64,114 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get loginPasswordHide => 'إخفاء كلمة السر';
+
+  @override
+  String get homeGuestSignIn => 'دخول';
+
+  @override
+  String get homeGuestHeroTitle => 'احجز ملعبك من غير زحمة';
+
+  @override
+  String get homeGuestHeroBody =>
+      'شوف الملاعب والأسعار، وسجّل دخولك عشان تحجز.';
+
+  @override
+  String get homeGuestHeroCta => 'سجّل دخولك واحجز';
+
+  @override
+  String homeGreeting(String name) {
+    return 'أهلاً يا $name';
+  }
+
+  @override
+  String get homeGreetingSubtitle => 'عايز تلعب إيه النهارده؟';
+
+  @override
+  String get homeUpcomingTitle => 'حجزك الجاي';
+
+  @override
+  String homeUpcomingWhen(DateTime date, DateTime time) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.MMMEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+    final intl.DateFormat timeDateFormat = intl.DateFormat.jm(localeName);
+    final String timeString = timeDateFormat.format(time);
+
+    return '$dateString · $timeString';
+  }
+
+  @override
+  String homeUpcomingDuration(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ساعة',
+      few: '$count ساعات',
+      two: 'ساعتين',
+      one: 'ساعة واحدة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeUpcomingEmptyTitle => 'مفيش حجوزات جاية';
+
+  @override
+  String get homeUpcomingEmptyBody => 'اختار ملعب من تحت واحجز أول حصة.';
+
+  @override
+  String get homeFacilitiesTitle => 'الملاعب والمرافق';
+
+  @override
+  String homePricePerHour(int price) {
+    return '$price ج.م / ساعة';
+  }
+
+  @override
+  String homePriceOriginal(int price) {
+    return '$price ج.م';
+  }
+
+  @override
+  String get homeModeFree => 'حجز حر';
+
+  @override
+  String get homeModeCoached => 'مع مدرب';
+
+  @override
+  String get homeCategoryPool => 'حمام سباحة';
+
+  @override
+  String get homeCategoryGym => 'جيم';
+
+  @override
+  String get homeCategoryFootballPitch => 'ملعب كرة قدم';
+
+  @override
+  String get homeCategoryBasketballCourt => 'ملعب كرة سلة';
+
+  @override
+  String homeFacilitySemantic(String name, String mode, String price) {
+    return '$name، $mode، $price';
+  }
+
+  @override
+  String get homeNavHome => 'الرئيسية';
+
+  @override
+  String get homeNavBookings => 'حجوزاتي';
+
+  @override
+  String get homeNavNotifications => 'الإشعارات';
+
+  @override
+  String get homeNavProfile => 'حسابي';
+
+  @override
+  String get homeComingSoon => 'قريبًا';
+
+  @override
+  String get homeErrorMessage => 'حصلت مشكلة وإحنا بنحمل الصفحة';
+
+  @override
+  String get homeRetry => 'حاول تاني';
 }
