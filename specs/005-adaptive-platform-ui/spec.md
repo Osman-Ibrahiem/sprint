@@ -110,7 +110,8 @@ When the keyboard opens, the focused field and the login button remain reachable
 - **FR-003**: Each class MUST provide type sizes from Figma **Type scale** (display-xl 48/56/64/72, display 40/44/52/60, h1 32/36/40/44, h2 26/28/32/34, h3 20/22/24/26, body-lg 16/17/18/18, body 15/16/16/17, sm 14/14/15/15, xs 12/12/13/13, micro 11/11/12/12). Weight, line height and family stay those of the Compact scale.
 - **FR-004**: Sizing inside a pane MUST follow the pane's own width (pane scope); the window class decides structure only. Without a pane scope the window class applies.
 - **FR-005**: The platform look MUST be derived from the theme's target platform: iOS/macOS → Apple; Android/Windows/Linux/Fuchsia → Material. On web the target platform comes from the user agent.
-- **FR-006**: A build-time override MUST allow forcing the platform look for testing (`SPRINT_PLATFORM=ios|android|macos|windows|linux`); unset means real platform. A second build-time override (`SPRINT_HINGE=vertical|horizontal`) adds a centred 20 dp hinge for devices that cannot report one (web, desktop, simulators).
+- **FR-006**: A build-time override MUST allow forcing the platform look for testing (`SPRINT_PLATFORM=ios|android|macos|windows|linux`); unset means real platform.
+  Device, fold, keyboard and platform simulation for development uses the `device_preview` package (debug/profile only; off in release).
 - **FR-007**: The adaptive text field, filled button and spinner MUST match the metrics in the table below.
 
   | Control | Apple | Material |
