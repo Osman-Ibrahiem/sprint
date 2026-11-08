@@ -13,18 +13,9 @@ abstract final class HingeOverride {
 
   static String get current => _raw;
 
-  /// Hinge direction for a device whose hinge splits the long side: a
-  /// landscape window gets a vertical hinge, a portrait one a horizontal hinge.
-  static String modeFor(Size size) =>
-      size.width > size.height ? 'vertical' : 'horizontal';
-
   /// Returns [media] with a simulated centred hinge for [mode]
   /// (`vertical` or `horizontal`), or unchanged for anything else.
-  static MediaQueryData apply(
-    MediaQueryData media,
-    String mode, {
-    double gap = gap,
-  }) {
+  static MediaQueryData apply(MediaQueryData media, String mode) {
     final size = media.size;
     final Rect bounds;
     switch (mode) {
