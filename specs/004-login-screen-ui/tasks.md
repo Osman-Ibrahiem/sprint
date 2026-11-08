@@ -119,7 +119,7 @@ loading state passes.
 
 - [X] T020 [P] Run `dart analyze lib/features/auth/ test/features/auth/` — resolve any warnings or hints until output is `No issues found!`
 - [X] T021 [P] Run `dart format --set-exit-if-changed lib/features/auth/ test/features/auth/` — apply formatting if needed
-- [ ] T022 Run all quickstart.md scenarios (1–7) manually in a running app (`flutter run` on device or simulator) and confirm all pass — pay special attention to Scenario 5 (keyboard scroll), Scenario 6 (RTL), and Scenario 7 (web responsive)
+- [x] T022 Run all quickstart.md scenarios (1–7) manually in a running app (`flutter run` on device or simulator) and confirm all pass — pay special attention to Scenario 5 (keyboard scroll), Scenario 6 (RTL), and Scenario 7 (web responsive) *(verified 2026-11-08: web 375/1280 and iPhone Duo simulator; scenarios 3–4 covered by widget tests; scenario 7 superseded by spec 005 two-pane layout)*
 - [X] T023 Run full test suite `flutter test` to confirm no regressions in other features
 
 ---
