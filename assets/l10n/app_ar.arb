@@ -1,98 +1,232 @@
 {
   "@@locale": "ar",
-
   "appName": "سبرنت",
   "@appName": {
     "description": "Application name displayed in the app bar"
   },
-
   "errorPageTitle": "خطأ",
   "@errorPageTitle": {
     "description": "Title shown on the 404/error screen"
   },
-
   "errorPageMessage": "الصفحة غير موجودة",
   "@errorPageMessage": {
     "description": "Body text on the 404/error screen"
   },
-
   "backToHome": "العودة للرئيسية",
   "@backToHome": {
     "description": "Button label on error screen to navigate back to home"
   },
-
   "splashTagline": "احجز من غير زحمة",
   "@splashTagline": {
     "description": "Tagline shown on the splash screen below the app name"
   },
-
   "splashUniversity": "جامعة طنطا",
   "@splashUniversity": {
     "description": "University name shown in the splash institution badge"
   },
-
   "splashFaculty": "كلية التربية الرياضية",
   "@splashFaculty": {
     "description": "Faculty name shown in the splash institution badge"
   },
-
   "loginTitle": "أهلاً بيك في سبرنت",
   "@loginTitle": {
     "description": "Heading text on the login placeholder screen"
   },
-
   "loginSubtitle": "ابدأ حجزك دلوقتي",
   "@loginSubtitle": {
     "description": "Subheading text on the login placeholder screen"
   },
-
   "loginIdentifierHint": "الإيميل أو رقم الموبايل",
   "@loginIdentifierHint": {
     "description": "Placeholder hint text for the identifier (email or phone) input field on the login screen"
   },
-
   "loginPasswordHint": "كلمة السر",
   "@loginPasswordHint": {
     "description": "Placeholder hint text for the password input field on the login screen"
   },
-
   "loginButton": "دخول",
   "@loginButton": {
     "description": "Label for the primary login button"
   },
-
   "loginIdentifierError": "يرجى إدخال الإيميل أو رقم الموبايل",
   "@loginIdentifierError": {
     "description": "Validation error caption shown below the identifier field"
   },
-
   "loginPasswordError": "يرجى إدخال كلمة السر",
   "@loginPasswordError": {
     "description": "Validation error caption shown below the password field"
   },
-
   "loginIdentifierSemantic": "حقل الإيميل أو رقم الموبايل",
   "@loginIdentifierSemantic": {
     "description": "Accessibility semantic label for the identifier input field"
   },
-
   "loginPasswordSemantic": "حقل كلمة السر",
   "@loginPasswordSemantic": {
     "description": "Accessibility semantic label for the password input field"
   },
-
   "loginButtonSemantic": "زرار الدخول",
   "@loginButtonSemantic": {
     "description": "Accessibility semantic label for the login button"
   },
-
   "loginPasswordShow": "إظهار كلمة السر",
   "@loginPasswordShow": {
     "description": "Semantic label for the password visibility toggle icon when password is hidden"
   },
-
   "loginPasswordHide": "إخفاء كلمة السر",
   "@loginPasswordHide": {
     "description": "Semantic label for the password visibility toggle icon when password is visible"
+  },
+  "homeGuestSignIn": "دخول",
+  "@homeGuestSignIn": {
+    "description": "Top-bar sign-in button on guest Home"
+  },
+  "homeGuestHeroTitle": "احجز ملعبك من غير زحمة",
+  "@homeGuestHeroTitle": {
+    "description": "Guest hero title"
+  },
+  "homeGuestHeroBody": "شوف الملاعب والأسعار، وسجّل دخولك عشان تحجز.",
+  "@homeGuestHeroBody": {
+    "description": "Guest hero body"
+  },
+  "homeGuestHeroCta": "سجّل دخولك واحجز",
+  "@homeGuestHeroCta": {
+    "description": "Guest hero button"
+  },
+  "homeGreeting": "أهلاً يا {name}",
+  "@homeGreeting": {
+    "description": "Booker greeting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingSubtitle": "عايز تلعب إيه النهارده؟",
+  "@homeGreetingSubtitle": {
+    "description": "Booker greeting subtitle"
+  },
+  "homeUpcomingTitle": "حجزك الجاي",
+  "@homeUpcomingTitle": {
+    "description": "Upcoming booking card title"
+  },
+  "homeUpcomingWhen": "{date} · {time}",
+  "@homeUpcomingWhen": {
+    "description": "Upcoming booking day and time",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "homeUpcomingDuration": "{count, plural, =1{ساعة واحدة} =2{ساعتين} few{{count} ساعات} other{{count} ساعة}}",
+  "@homeUpcomingDuration": {
+    "description": "Booking duration in hours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeUpcomingEmptyTitle": "مفيش حجوزات جاية",
+  "@homeUpcomingEmptyTitle": {
+    "description": "Empty state title when the booker has no upcoming booking"
+  },
+  "homeUpcomingEmptyBody": "اختار ملعب من تحت واحجز أول حصة.",
+  "@homeUpcomingEmptyBody": {
+    "description": "Empty state body"
+  },
+  "homeFacilitiesTitle": "الملاعب والمرافق",
+  "@homeFacilitiesTitle": {
+    "description": "Facilities section title"
+  },
+  "homePricePerHour": "{price} ج.م / ساعة",
+  "@homePricePerHour": {
+    "description": "Price per hour in EGP",
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "homePriceOriginal": "{price} ج.م",
+  "@homePriceOriginal": {
+    "description": "Struck-through original price",
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "homeModeFree": "حجز حر",
+  "@homeModeFree": {
+    "description": "Badge: free-booking facility"
+  },
+  "homeModeCoached": "مع مدرب",
+  "@homeModeCoached": {
+    "description": "Badge: coached facility"
+  },
+  "homeCategoryPool": "حمام سباحة",
+  "@homeCategoryPool": {
+    "description": "Facility category"
+  },
+  "homeCategoryGym": "جيم",
+  "@homeCategoryGym": {
+    "description": "Facility category"
+  },
+  "homeCategoryFootballPitch": "ملعب كرة قدم",
+  "@homeCategoryFootballPitch": {
+    "description": "Facility category"
+  },
+  "homeCategoryBasketballCourt": "ملعب كرة سلة",
+  "@homeCategoryBasketballCourt": {
+    "description": "Facility category"
+  },
+  "homeFacilitySemantic": "{name}، {mode}، {price}",
+  "@homeFacilitySemantic": {
+    "description": "Facility card semantic label",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "mode": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNavHome": "الرئيسية",
+  "@homeNavHome": {
+    "description": "Navigation destination"
+  },
+  "homeNavBookings": "حجوزاتي",
+  "@homeNavBookings": {
+    "description": "Navigation destination"
+  },
+  "homeNavNotifications": "الإشعارات",
+  "@homeNavNotifications": {
+    "description": "Navigation destination"
+  },
+  "homeNavProfile": "حسابي",
+  "@homeNavProfile": {
+    "description": "Navigation destination"
+  },
+  "homeComingSoon": "قريبًا",
+  "@homeComingSoon": {
+    "description": "Placeholder body for screens not built yet"
+  },
+  "homeErrorMessage": "حصلت مشكلة وإحنا بنحمل الصفحة",
+  "@homeErrorMessage": {
+    "description": "Home load failure message"
+  },
+  "homeRetry": "حاول تاني",
+  "@homeRetry": {
+    "description": "Retry button"
   }
 }

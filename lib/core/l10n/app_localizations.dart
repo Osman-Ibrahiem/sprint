@@ -211,6 +211,174 @@ abstract class AppLocalizations {
   /// In ar, this message translates to:
   /// **'إخفاء كلمة السر'**
   String get loginPasswordHide;
+
+  /// Top-bar sign-in button on guest Home
+  ///
+  /// In ar, this message translates to:
+  /// **'دخول'**
+  String get homeGuestSignIn;
+
+  /// Guest hero title
+  ///
+  /// In ar, this message translates to:
+  /// **'احجز ملعبك من غير زحمة'**
+  String get homeGuestHeroTitle;
+
+  /// Guest hero body
+  ///
+  /// In ar, this message translates to:
+  /// **'شوف الملاعب والأسعار، وسجّل دخولك عشان تحجز.'**
+  String get homeGuestHeroBody;
+
+  /// Guest hero button
+  ///
+  /// In ar, this message translates to:
+  /// **'سجّل دخولك واحجز'**
+  String get homeGuestHeroCta;
+
+  /// Booker greeting
+  ///
+  /// In ar, this message translates to:
+  /// **'أهلاً يا {name}'**
+  String homeGreeting(String name);
+
+  /// Booker greeting subtitle
+  ///
+  /// In ar, this message translates to:
+  /// **'عايز تلعب إيه النهارده؟'**
+  String get homeGreetingSubtitle;
+
+  /// Upcoming booking card title
+  ///
+  /// In ar, this message translates to:
+  /// **'حجزك الجاي'**
+  String get homeUpcomingTitle;
+
+  /// Upcoming booking day and time
+  ///
+  /// In ar, this message translates to:
+  /// **'{date} · {time}'**
+  String homeUpcomingWhen(DateTime date, DateTime time);
+
+  /// Booking duration in hours
+  ///
+  /// In ar, this message translates to:
+  /// **'{count, plural, =1{ساعة واحدة} =2{ساعتين} few{{count} ساعات} other{{count} ساعة}}'**
+  String homeUpcomingDuration(int count);
+
+  /// Empty state title when the booker has no upcoming booking
+  ///
+  /// In ar, this message translates to:
+  /// **'مفيش حجوزات جاية'**
+  String get homeUpcomingEmptyTitle;
+
+  /// Empty state body
+  ///
+  /// In ar, this message translates to:
+  /// **'اختار ملعب من تحت واحجز أول حصة.'**
+  String get homeUpcomingEmptyBody;
+
+  /// Facilities section title
+  ///
+  /// In ar, this message translates to:
+  /// **'الملاعب والمرافق'**
+  String get homeFacilitiesTitle;
+
+  /// Price per hour in EGP
+  ///
+  /// In ar, this message translates to:
+  /// **'{price} ج.م / ساعة'**
+  String homePricePerHour(int price);
+
+  /// Struck-through original price
+  ///
+  /// In ar, this message translates to:
+  /// **'{price} ج.م'**
+  String homePriceOriginal(int price);
+
+  /// Badge: free-booking facility
+  ///
+  /// In ar, this message translates to:
+  /// **'حجز حر'**
+  String get homeModeFree;
+
+  /// Badge: coached facility
+  ///
+  /// In ar, this message translates to:
+  /// **'مع مدرب'**
+  String get homeModeCoached;
+
+  /// Facility category
+  ///
+  /// In ar, this message translates to:
+  /// **'حمام سباحة'**
+  String get homeCategoryPool;
+
+  /// Facility category
+  ///
+  /// In ar, this message translates to:
+  /// **'جيم'**
+  String get homeCategoryGym;
+
+  /// Facility category
+  ///
+  /// In ar, this message translates to:
+  /// **'ملعب كرة قدم'**
+  String get homeCategoryFootballPitch;
+
+  /// Facility category
+  ///
+  /// In ar, this message translates to:
+  /// **'ملعب كرة سلة'**
+  String get homeCategoryBasketballCourt;
+
+  /// Facility card semantic label
+  ///
+  /// In ar, this message translates to:
+  /// **'{name}، {mode}، {price}'**
+  String homeFacilitySemantic(String name, String mode, String price);
+
+  /// Navigation destination
+  ///
+  /// In ar, this message translates to:
+  /// **'الرئيسية'**
+  String get homeNavHome;
+
+  /// Navigation destination
+  ///
+  /// In ar, this message translates to:
+  /// **'حجوزاتي'**
+  String get homeNavBookings;
+
+  /// Navigation destination
+  ///
+  /// In ar, this message translates to:
+  /// **'الإشعارات'**
+  String get homeNavNotifications;
+
+  /// Navigation destination
+  ///
+  /// In ar, this message translates to:
+  /// **'حسابي'**
+  String get homeNavProfile;
+
+  /// Placeholder body for screens not built yet
+  ///
+  /// In ar, this message translates to:
+  /// **'قريبًا'**
+  String get homeComingSoon;
+
+  /// Home load failure message
+  ///
+  /// In ar, this message translates to:
+  /// **'حصلت مشكلة وإحنا بنحمل الصفحة'**
+  String get homeErrorMessage;
+
+  /// Retry button
+  ///
+  /// In ar, this message translates to:
+  /// **'حاول تاني'**
+  String get homeRetry;
 }
 
 class _AppLocalizationsDelegate

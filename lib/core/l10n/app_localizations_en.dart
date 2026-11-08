@@ -64,4 +64,113 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loginPasswordHide => 'Hide password';
+
+  @override
+  String get homeGuestSignIn => 'Sign in';
+
+  @override
+  String get homeGuestHeroTitle => 'Book your court without the crowd';
+
+  @override
+  String get homeGuestHeroBody =>
+      'Browse facilities and prices, then sign in to book.';
+
+  @override
+  String get homeGuestHeroCta => 'Sign in and book';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hi, $name';
+  }
+
+  @override
+  String get homeGreetingSubtitle => 'What are you playing today?';
+
+  @override
+  String get homeUpcomingTitle => 'Your next booking';
+
+  @override
+  String homeUpcomingWhen(DateTime date, DateTime time) {
+    final intl.DateFormat dateDateFormat = intl.DateFormat.MMMEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+    final intl.DateFormat timeDateFormat = intl.DateFormat.jm(localeName);
+    final String timeString = timeDateFormat.format(time);
+
+    return '$dateString · $timeString';
+  }
+
+  @override
+  String homeUpcomingDuration(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hours',
+      one: '1 hour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get homeUpcomingEmptyTitle => 'No upcoming bookings';
+
+  @override
+  String get homeUpcomingEmptyBody =>
+      'Pick a facility below and book your first session.';
+
+  @override
+  String get homeFacilitiesTitle => 'Facilities';
+
+  @override
+  String homePricePerHour(int price) {
+    return '$price EGP / hour';
+  }
+
+  @override
+  String homePriceOriginal(int price) {
+    return '$price EGP';
+  }
+
+  @override
+  String get homeModeFree => 'Free booking';
+
+  @override
+  String get homeModeCoached => 'With trainer';
+
+  @override
+  String get homeCategoryPool => 'Swimming pool';
+
+  @override
+  String get homeCategoryGym => 'Gym';
+
+  @override
+  String get homeCategoryFootballPitch => 'Football pitch';
+
+  @override
+  String get homeCategoryBasketballCourt => 'Basketball court';
+
+  @override
+  String homeFacilitySemantic(String name, String mode, String price) {
+    return '$name, $mode, $price';
+  }
+
+  @override
+  String get homeNavHome => 'Home';
+
+  @override
+  String get homeNavBookings => 'My bookings';
+
+  @override
+  String get homeNavNotifications => 'Notifications';
+
+  @override
+  String get homeNavProfile => 'Profile';
+
+  @override
+  String get homeComingSoon => 'Coming soon';
+
+  @override
+  String get homeErrorMessage => 'Something went wrong loading this page';
+
+  @override
+  String get homeRetry => 'Try again';
 }

@@ -1,98 +1,232 @@
 {
   "@@locale": "en",
-
   "appName": "Sprint",
   "@appName": {
     "description": "Application name displayed in the app bar"
   },
-
   "errorPageTitle": "Error",
   "@errorPageTitle": {
     "description": "Title shown on the 404/error screen"
   },
-
   "errorPageMessage": "Page not found",
   "@errorPageMessage": {
     "description": "Body text on the 404/error screen"
   },
-
   "backToHome": "Back to Home",
   "@backToHome": {
     "description": "Button label on error screen to navigate back to home"
   },
-
   "splashTagline": "Book hassle-free",
   "@splashTagline": {
     "description": "Tagline shown on the splash screen below the app name"
   },
-
   "splashUniversity": "Tanta University",
   "@splashUniversity": {
     "description": "University name shown in the splash institution badge"
   },
-
   "splashFaculty": "Faculty of Physical Education",
   "@splashFaculty": {
     "description": "Faculty name shown in the splash institution badge"
   },
-
   "loginTitle": "Welcome to Sprint",
   "@loginTitle": {
     "description": "Heading text on the login placeholder screen"
   },
-
   "loginSubtitle": "Start booking now",
   "@loginSubtitle": {
     "description": "Subheading text on the login placeholder screen"
   },
-
   "loginIdentifierHint": "Email or phone number",
   "@loginIdentifierHint": {
     "description": "Placeholder hint text for the identifier (email or phone) input field on the login screen"
   },
-
   "loginPasswordHint": "Password",
   "@loginPasswordHint": {
     "description": "Placeholder hint text for the password input field on the login screen"
   },
-
   "loginButton": "Sign in",
   "@loginButton": {
     "description": "Label for the primary login button"
   },
-
   "loginIdentifierError": "Please enter your email or phone",
   "@loginIdentifierError": {
     "description": "Validation error caption shown below the identifier field"
   },
-
   "loginPasswordError": "Please enter your password",
   "@loginPasswordError": {
     "description": "Validation error caption shown below the password field"
   },
-
   "loginIdentifierSemantic": "Email or phone number field",
   "@loginIdentifierSemantic": {
     "description": "Accessibility semantic label for the identifier input field"
   },
-
   "loginPasswordSemantic": "Password field",
   "@loginPasswordSemantic": {
     "description": "Accessibility semantic label for the password input field"
   },
-
   "loginButtonSemantic": "Sign in button",
   "@loginButtonSemantic": {
     "description": "Accessibility semantic label for the login button"
   },
-
   "loginPasswordShow": "Show password",
   "@loginPasswordShow": {
     "description": "Semantic label for the password visibility toggle icon when password is hidden"
   },
-
   "loginPasswordHide": "Hide password",
   "@loginPasswordHide": {
     "description": "Semantic label for the password visibility toggle icon when password is visible"
+  },
+  "homeGuestSignIn": "Sign in",
+  "@homeGuestSignIn": {
+    "description": "Top-bar sign-in button on guest Home"
+  },
+  "homeGuestHeroTitle": "Book your court without the crowd",
+  "@homeGuestHeroTitle": {
+    "description": "Guest hero title"
+  },
+  "homeGuestHeroBody": "Browse facilities and prices, then sign in to book.",
+  "@homeGuestHeroBody": {
+    "description": "Guest hero body"
+  },
+  "homeGuestHeroCta": "Sign in and book",
+  "@homeGuestHeroCta": {
+    "description": "Guest hero button"
+  },
+  "homeGreeting": "Hi, {name}",
+  "@homeGreeting": {
+    "description": "Booker greeting",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingSubtitle": "What are you playing today?",
+  "@homeGreetingSubtitle": {
+    "description": "Booker greeting subtitle"
+  },
+  "homeUpcomingTitle": "Your next booking",
+  "@homeUpcomingTitle": {
+    "description": "Upcoming booking card title"
+  },
+  "homeUpcomingWhen": "{date} · {time}",
+  "@homeUpcomingWhen": {
+    "description": "Upcoming booking day and time",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "MMMEd"
+      },
+      "time": {
+        "type": "DateTime",
+        "format": "jm"
+      }
+    }
+  },
+  "homeUpcomingDuration": "{count, plural, =1{1 hour} other{{count} hours}}",
+  "@homeUpcomingDuration": {
+    "description": "Booking duration in hours",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeUpcomingEmptyTitle": "No upcoming bookings",
+  "@homeUpcomingEmptyTitle": {
+    "description": "Empty state title when the booker has no upcoming booking"
+  },
+  "homeUpcomingEmptyBody": "Pick a facility below and book your first session.",
+  "@homeUpcomingEmptyBody": {
+    "description": "Empty state body"
+  },
+  "homeFacilitiesTitle": "Facilities",
+  "@homeFacilitiesTitle": {
+    "description": "Facilities section title"
+  },
+  "homePricePerHour": "{price} EGP / hour",
+  "@homePricePerHour": {
+    "description": "Price per hour in EGP",
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "homePriceOriginal": "{price} EGP",
+  "@homePriceOriginal": {
+    "description": "Struck-through original price",
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "homeModeFree": "Free booking",
+  "@homeModeFree": {
+    "description": "Badge: free-booking facility"
+  },
+  "homeModeCoached": "With trainer",
+  "@homeModeCoached": {
+    "description": "Badge: coached facility"
+  },
+  "homeCategoryPool": "Swimming pool",
+  "@homeCategoryPool": {
+    "description": "Facility category"
+  },
+  "homeCategoryGym": "Gym",
+  "@homeCategoryGym": {
+    "description": "Facility category"
+  },
+  "homeCategoryFootballPitch": "Football pitch",
+  "@homeCategoryFootballPitch": {
+    "description": "Facility category"
+  },
+  "homeCategoryBasketballCourt": "Basketball court",
+  "@homeCategoryBasketballCourt": {
+    "description": "Facility category"
+  },
+  "homeFacilitySemantic": "{name}, {mode}, {price}",
+  "@homeFacilitySemantic": {
+    "description": "Facility card semantic label",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "mode": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNavHome": "Home",
+  "@homeNavHome": {
+    "description": "Navigation destination"
+  },
+  "homeNavBookings": "My bookings",
+  "@homeNavBookings": {
+    "description": "Navigation destination"
+  },
+  "homeNavNotifications": "Notifications",
+  "@homeNavNotifications": {
+    "description": "Navigation destination"
+  },
+  "homeNavProfile": "Profile",
+  "@homeNavProfile": {
+    "description": "Navigation destination"
+  },
+  "homeComingSoon": "Coming soon",
+  "@homeComingSoon": {
+    "description": "Placeholder body for screens not built yet"
+  },
+  "homeErrorMessage": "Something went wrong loading this page",
+  "@homeErrorMessage": {
+    "description": "Home load failure message"
+  },
+  "homeRetry": "Try again",
+  "@homeRetry": {
+    "description": "Retry button"
   }
 }
