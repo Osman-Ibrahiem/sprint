@@ -15,8 +15,7 @@ void main() {
       container.dispose();
     });
 
-    LoginFormNotifier notifier() =>
-        container.read(loginFormProvider.notifier);
+    LoginFormNotifier notifier() => container.read(loginFormProvider.notifier);
 
     LoginFormState state() => container.read(loginFormProvider);
 
