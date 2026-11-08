@@ -144,8 +144,8 @@ has no domain use-case logic to test-first.
 - [X] T026 Run `dart analyze` and fix any remaining warnings to achieve zero-issue output (SC-006)
 - [X] T027 Run `dart format --set-exit-if-changed .` and fix any formatting issues; re-run until exit code 0
 - [X] T028 [P] Create `lib/features/.gitkeep` to preserve the empty features directory in git; confirm `grep -r "import.*features/" lib/core/` returns no output (SC-001)
-- [ ] T029 Manually run all validation checks from `specs/002-core-foundation/quickstart.md` in order (SC-001 through SC-008): structure check, theme test, web launch + RTL check, deep-link to `/error`, iOS simulator launch, Android emulator launch, ARB round-trip test, setup timing
-- [ ] T030 Update `specs/002-core-foundation/quickstart.md` Definition of Done checklist — check off all passing items
+- [x] T029 Manually run all validation checks from `specs/002-core-foundation/quickstart.md` in order (SC-001 through SC-008): structure check, theme test, web launch + RTL check, deep-link to `/error`, iOS simulator launch, Android emulator launch, ARB round-trip test, setup timing *(verified 2026-11-08)*
+- [x] T030 Update `specs/002-core-foundation/quickstart.md` Definition of Done checklist — check off all passing items *(verified 2026-11-08)*
 
 ---
 
