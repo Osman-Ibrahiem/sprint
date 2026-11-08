@@ -1,50 +1,96 @@
-# Implementation Plan: Home Screen UI
+# Implementation Plan: Home Screen UI (Guest and Booker)
 
-**Spec**: [spec.md](spec.md) · **Branch**: `claude/home-screen-d508af` → PR into `develop`
+**Branch**: `claude/home-screen-d508af` | **Date**: 2026-11-08 | **Spec**: [spec.md](spec.md)
+
+**Input**: Feature specification from `/specs/006-home-screen/spec.md`
 
 ## Summary
-New feature module `lib/features/home/` with a small domain (entities, repository interface,
-one use case), a mock data implementation, and a presentation layer with a `@riverpod` view
-model per session. `/home` route builds `HomeScreen(session)`. Replaces the placeholder
-`HomeShellScreen`.
+
+A new feature module `features/home` replaces the placeholder `HomeShellScreen`. A small domain
+(entities, `HomeRepository` interface, one use case) is fed by a mock data implementation; a
+Riverpod-generated provider per session (`guest` | `booker`) drives two presentation states.
+Guest is a limited discovery page; Booker adds greeting, next booking, discounted prices and
+adaptive navigation (bottom bar / rail / extended rail). Layout follows the 005 size classes and
+`PaneScope`; strings go through ARB. No auth, Supabase, booking or payment code.
 
 ## Technical Context
-Dart ≥ 3.11, Flutter, flutter_riverpod 3 + riverpod_annotation 4 + generator, go_router 18,
-freezed 4, intl/ARB (`assets/l10n`, output `lib/core/l10n`). Tests: flutter_test.
-Adaptive foundation from 005: `SizeClass`, `AdaptiveTokens`, `PaneScope`, `AppPlatform`,
-`AdaptiveFilledButton`, `AdaptiveSpinner`, `BoltMark`.
+
+**Language/Version**: Dart ≥ 3.11 (Flutter SDK `^3.11.1`)
+
+**Primary Dependencies**: flutter_riverpod ^3.5, riverpod_annotation ^4.0 (+ riverpod_generator), go_router ^18, freezed_annotation, intl / flutter_localizations (ARB in `assets/l10n`, output `lib/core/l10n`)
+
+**Storage**: N/A (mock in-memory data)
+
+**Testing**: flutter_test — domain unit tests, widget tests per state and width
+
+**Target Platform**: Flutter web + iOS + Android (single codebase)
+
+**Project Type**: mobile-app (Flutter)
+
+**Performance Goals**: lazy sliver grid; 60 fps scrolling on a 4–N item list
+
+**Constraints**: RTL Arabic default, Cairo font, tokens only (`core/theme`, `core/adaptive`), no new breakpoints, content scrolls and survives 200% text scale, usable from 320 dp
+
+**Scale/Scope**: 1 route (two states), ~9 widgets, 1 use case, 1 mock repository, ~28 l10n keys
 
 ## Constitution Check
-All gates pass (see spec). No complexity deviations.
 
-## Structure
+*GATE: passes before Phase 0; re-checked after Phase 1 design — still passes.*
+
+1. **I Clean Architecture** ✅ — `features/home/{domain,data,presentation}`; domain is pure Dart (no Flutter, Supabase); presentation talks to domain interfaces through providers.
+2. **II Riverpod** ✅ — `@riverpod` providers and a nav notifier; no `setState`.
+3. **III Test-first core** ✅ — pricing rule, use case and mock repository tested before presentation work.
+4. **IV Modularity** ✅ — self-contained feature; the only core imports are shared tokens, adaptive widgets, router constants and l10n.
+5. **V Mobile patterns** ✅ — `const` widgets, `SliverGrid.builder`, pure builds.
+6. **VI Adaptive-first** ✅ — grid columns and nav type come from size classes; `PaneScope` around the content pane; scrolls; safe areas.
+7. **VII Platform-adaptive UI** ✅ — filled button and spinner from `core/presentation/widgets/adaptive/`; chrome icons are Material in v1 (deviation recorded below).
+8. **BR-04** ✅ facility carries a booking mode; **BR-07** ✅ price computed in the domain, guests see prices but cannot book.
+
+## Project Structure
+
+### Documentation (this feature)
+
+```text
+specs/006-home-screen/
+├── plan.md
+├── research.md
+├── data-model.md
+├── quickstart.md
+├── contracts/
+│   └── widget-contracts.md
+├── checklists/requirements.md
+└── tasks.md             # /speckit-tasks
+```
+
+### Source Code (repository root)
+
 ```text
 lib/features/home/
 ├── domain/
-│   ├── entities/ {facility, facility_category, booking_mode, user_affiliation,
-│   │              booker_profile, upcoming_booking, home_content}.dart
+│   ├── entities/        # facility, facility_category, booking_mode, user_affiliation,
+│   │                    # booker_profile, upcoming_booking, home_content
 │   ├── home_session.dart
 │   ├── repositories/home_repository.dart
 │   └── usecases/get_home_content.dart
 ├── data/mock_home_repository.dart
 └── presentation/
     ├── home_layout.dart
-    ├── providers/ home_providers.dart (+ .g.dart), home_nav_notifier.dart
-    ├── screens/ home_screen.dart
-    └── widgets/ home_top_bar, home_hero, upcoming_booking_card, facility_card,
-                 facilities_section, home_nav, home_error_view, coming_soon_view
-test/features/home/ domain/ + presentation/
-specs/006-home-screen/
+    ├── providers/home_providers.dart        # + generated .g.dart
+    ├── screens/home_screen.dart
+    └── widgets/         # home_top_bar, home_hero, home_greeting, upcoming_booking_card,
+                         # facility_card, facilities_section, facility_labels,
+                         # home_nav, home_status_views
+lib/core/router/app_router.dart              # /home?session= → HomeScreen
+assets/l10n/app_{ar,en}.arb                  # home* keys
+test/features/home/{domain,presentation}/
 ```
 
-## Decisions
-1. **Session source**: route query `?session=booker|guest` (default guest) → `HomeSession`. Keeps state out of global mock singletons; real auth later replaces the router param with an auth provider without touching widgets.
-2. **Nav**: `NavigationBar` / `NavigationRail` / permanent `NavigationDrawer` styled with tokens (Material widgets, themed lime/green); the platform look of chrome stays Material-based in v1 (Cupertino tab bar deferred, recorded below). Selected index in `HomeNavNotifier` (Riverpod).
-3. **Prices** in whole EGP per hour (`int`); formatted via ARB placeholder.
-4. **Facility art**: gradient tile + category icon until photos exist.
-5. **Grid**: `SliverGrid` with `SliverGridDelegateWithFixedCrossAxisCount` from pane columns; card height by fixed `mainAxisExtent` token from `home_layout.dart`.
-6. **Hinge**: no split; content scrolls inside `SafeArea`.
+**Structure Decision**: Flutter feature-first layout (template Option 3). The placeholder
+`lib/core/presentation/screens/home_shell_screen.dart` is deleted.
 
-## Deviations / open
-- No Figma: visual design is Claude-authored, to be reviewed by owner.
-- Cupertino-style tab bar on Apple deferred.
+## Complexity Tracking
+
+| Deviation | Why | Simpler alternative rejected because |
+|-----------|-----|--------------------------------------|
+| Navigation chrome uses Material widgets on every platform | Shared adaptive nav control does not exist yet | Building a Cupertino tab bar now is out of scope; recorded for Home v2 |
+| `NavType.drawer` rendered as an extended rail | Same control, fewer moving parts | A permanent drawer adds a second nav widget for no UX gain |

@@ -1,91 +1,149 @@
-# Feature Specification: Home Screen UI (Guest + Booker)
+# Feature Specification: Home Screen UI (Guest and Booker)
 
 **Feature Branch**: `claude/home-screen-d508af` (merges into `develop`, never `main`)
+
 **Created**: 2026-11-08
+
 **Status**: Draft
-**Input**: Home screen in two states — guest (not logged in, limited) and logged-in Booker. UI only, mock data.
+
+**Input**: User description: "Home screen for Sprint in two states: guest (not logged in, limited discovery UI with facility list and visible prices, every booking entry point leads to login) and logged-in Booker (greeting, next booking or empty state, facility list with price by account type, adaptive navigation bar/rail). UI only with mock data; no auth logic."
 
 > Builds on [004-login-screen-ui](../004-login-screen-ui/spec.md) and
-> [005-adaptive-platform-ui](../005-adaptive-platform-ui/spec.md) (size classes, `PaneScope`,
-> adaptive widgets, platform look). No canonical Figma exists for Home; the layout below is
-> the design of record until one does (UX correction 1 and 2 in
-> `docs/project-context/product-and-ux.md`).
+> [005-adaptive-platform-ui](../005-adaptive-platform-ui/spec.md) (size classes, platform look).
+> No canonical Figma exists for Home; this spec is the design of record until one does.
+> Product decisions come from `docs/project-context/product-and-ux.md`: Home is state-based
+> (UX correction 1) and has no quick-action buttons that duplicate the navigation (UX correction 2).
 
-## Scope
+## User Scenarios & Testing *(mandatory)*
 
-**In**: the `/home` route in two states, mock data behind a domain repository interface,
-adaptive navigation for the signed-in state, facility discovery with prices.
-**Out of scope**: Supabase / auth logic / real session, Register screen (deferred), booking
-flow, payment, My Bookings / Notifications / Profile screens (nav destinations exist, show a
-"coming soon" body), trainer and admin homes, photos (placeholder art until assets exist),
-foldable hinge-aware split (content scrolls and stays inside safe areas; revisit with Home v2).
+### User Story 1 — Guest discovers facilities (Priority: P1)
 
-## User Scenarios & Testing
+A visitor who is not signed in opens the app and lands on a limited Home. They see the Sprint
+brand, a short pitch with a sign-in call to action, and the list of facilities with their prices.
+They can browse but cannot book: every booking entry point takes them to the login screen.
 
-### US1 — Guest discovers facilities (P1)
-A visitor who is not signed in sees a limited Home: brand top bar with a "دخول" button, a
-short pitch, and a list of facilities with their prices. Prices are visible (BR-07); booking is
-not possible.
+**Why this priority**: it is the first thing every new visitor sees and it must explain the value
+and funnel people into sign-in. It is also the smallest shippable Home.
 
-**Independent test**: open `/home` (default = guest). Top bar shows brand + login button, hero
-with sign-in CTA, facility cards with full price; no bottom navigation; tapping a card or any
-CTA goes to `/login`.
+**Independent Test**: open Home with no signed-in user; confirm the guest layout, the full prices,
+and that every call to action leads to login.
 
-Acceptance:
-1. Given guest state, when loaded, then no greeting, no upcoming booking, no navigation bar/rail.
-2. Given a facility card, then it shows name, category, booking mode badge (free / with trainer — BR-04) and the **full** hourly price.
-3. Given a tap on a card, hero CTA or top-bar button, then the app navigates to `/login`.
+**Acceptance Scenarios**:
 
-### US2 — Booker sees a personalised Home (P1)
-A signed-in Booker sees a greeting, their next booking (or an empty state), the facility list
-with **their** price (university-affiliated → discounted with the full price struck through;
-external → full price), and the app navigation.
+1. **Given** a visitor who is not signed in, **When** Home loads, **Then** they see the brand with a sign-in button, a pitch with a sign-in call to action, and a list of facilities; they do not see a greeting, a booking card, or any navigation bar.
+2. **Given** a facility in the list, **When** it is shown to a guest, **Then** it displays name, category, how it is booked (free booking or with a trainer) and the full hourly price.
+3. **Given** the guest Home, **When** the visitor taps the sign-in button, the pitch button, or a facility, **Then** the login screen opens.
 
-**Independent test**: open `/home?session=booker`. Greeting uses the profile name; upcoming
-booking card shows facility and time; affiliated users see discounted prices.
+---
 
-Acceptance:
-1. Given a booker with an upcoming booking, then the card shows facility name, day/time and duration.
-2. Given a booker with none, then an empty-state card invites to book.
-3. Given a university-affiliated booker, then every facility card shows the discounted price and the original price struck through; an external booker sees full price only.
-4. Given the signed-in state, then navigation has 4 destinations (Home, My bookings, Notifications, Profile); non-Home destinations show a "coming soon" body. No quick-action buttons duplicate them (UX correction 2).
+### User Story 2 — Booker sees a personalised Home (Priority: P1)
 
-### US3 — Adapts to the window (P2)
-Compact: one column + bottom bar. Medium: 2-column grid + rail. Expanded: 3 columns + rail.
-Large: 3 columns + permanent drawer. Guest has no nav at any size. Content is capped at
-`maxContentWidth`, scrolls, never overflows from 320 dp, and follows the platform look.
+A signed-in Booker sees a greeting by name, their next booking (or an invitation to make one),
+the facility list priced for their account type, and the app navigation.
 
-### US4 — Loading and error states (P3)
-While content loads a skeleton-free spinner (adaptive) shows; on failure an Arabic message with
-a retry button shows. Mock repository can be made to fail in tests.
+**Why this priority**: it is the everyday home of the main user role and carries the automatic
+pricing rule that the dissertation depends on.
 
-## Requirements
+**Independent Test**: open Home as a university-affiliated Booker and as an external Booker;
+confirm greeting, booking card or empty state, and each price tier.
 
-- **FR-001** Home MUST render two states chosen by a `HomeSession` value (`guest`, `booker`) taken from the route query `session` (default `guest`). No real auth.
-- **FR-002** Data MUST come from `HomeRepository` (domain interface) implemented by `MockHomeRepository` (data layer). No Supabase imports anywhere in `features/home/`.
-- **FR-003** Price shown MUST be computed in the domain (`Facility.priceFor(UserAffiliation?)`): null (guest) and `external` → full price, `universityAffiliated` → discounted (BR-07).
-- **FR-004** Each facility MUST expose its booking mode (`free` | `coached`), shown as a badge; the two flows are never merged (BR-04).
-- **FR-005** Guest MUST NOT see booking-specific personal data and has no navigation chrome; every booking entry point routes to `/login`.
-- **FR-006** Signed-in navigation type MUST follow `AdaptiveTokens.navType` of the window class (bottomBar / rail / drawer).
-- **FR-007** Grid columns for facility cards MUST derive from the pane's size class (compact 1, medium 2, expanded 3, large 3) via a layout helper; no new breakpoints.
-- **FR-008** All colors from `AppColors`, spacing from `AppSpacing`, radii from `AppRadius`, type from `AdaptiveTypography`; no hardcoded values. Home-specific constants live in `home_layout.dart`.
-- **FR-009** All user-facing strings via ARB (`ar` source, `en` mirror). Mock facility names are mock *data* in the data layer and are replaced by backend content later.
-- **FR-010** RTL by default; icons from `AppIcons`/platform-aware or directional-safe Material icons.
-- **FR-011** State via `@riverpod` (code generation). No `setState`.
-- **FR-012** Semantics: cards expose name + price + mode as one label; decorative art excluded.
+**Acceptance Scenarios**:
 
-## Key Entities
+1. **Given** a signed-in Booker with an upcoming booking, **When** Home loads, **Then** a card shows the facility, the day and time, and the duration.
+2. **Given** a signed-in Booker with no upcoming booking, **When** Home loads, **Then** an empty-state card invites them to book their first session.
+3. **Given** a university-affiliated Booker, **When** facilities are listed, **Then** each shows the discounted price with the full price struck through.
+4. **Given** an external Booker, **When** facilities are listed, **Then** each shows the full price only.
+5. **Given** a signed-in Booker, **When** Home loads, **Then** navigation offers four destinations (Home, My bookings, Notifications, Profile); choosing any other than Home shows a "coming soon" message; no shortcut buttons duplicate the navigation.
 
-`Facility`, `FacilityCategory`, `BookingMode`, `UserAffiliation`, `BookerProfile`,
-`UpcomingBooking`, `HomeContent`, `HomeSession`.
+---
 
-## Success Criteria
+### User Story 3 — Home adapts to the window (Priority: P2)
 
-- `flutter analyze` clean, `flutter test` green, `dart format` clean.
-- Both states verified on web and an iOS simulator; Material look checked via `SPRINT_PLATFORM`.
-- Domain tests cover pricing, use-case branching; widget tests cover both states and 3 widths.
+On a phone, Home is a single column with a bottom navigation bar. On larger windows it uses a
+side navigation rail and a multi-column facility grid; on the largest windows the rail is
+extended with labels. The guest Home never shows navigation. Content stays readable and inside
+the safe areas at every width from 320 dp.
 
-## Constitution Check
-I Clean Arch ✅ (domain/data/presentation, no infra in domain) · II Riverpod ✅ · III tests ✅ ·
-IV feature module ✅ · V mobile patterns ✅ (`ListView`/sliver builders, const) · VI adaptive ✅ ·
-VII platform-adaptive ✅ (shared controls only) · BR-04, BR-07 enforced in domain.
+**Why this priority**: the app ships on phones, tablets, foldables and the web from one codebase.
+
+**Independent Test**: open both states at 320, 360, 800, 1000 and 1400 dp wide and confirm
+navigation type and column count with no overflow.
+
+**Acceptance Scenarios**:
+
+1. **Given** a window narrower than 600 dp, **When** a Booker views Home, **Then** there is one facility column and a bottom bar.
+2. **Given** wider windows, **When** a Booker views Home, **Then** navigation moves to the side and the facility grid shows more columns as the content area grows.
+3. **Given** any width from 320 dp, **When** either state is shown, **Then** nothing overflows and content scrolls.
+
+---
+
+### User Story 4 — Loading and failure (Priority: P3)
+
+While Home content loads the user sees a loading indicator. If loading fails they see a clear
+Arabic message and a retry button.
+
+**Why this priority**: graceful states make the later real backend safe to connect.
+
+**Independent Test**: simulate a slow load and a failed load; confirm the indicator, the message,
+and that retry reloads the content.
+
+**Acceptance Scenarios**:
+
+1. **Given** content is loading, **When** Home is shown, **Then** a platform-appropriate loading indicator is visible.
+2. **Given** loading failed, **When** Home is shown, **Then** an error message and a retry button appear, and tapping retry loads the content again.
+
+---
+
+### Edge Cases
+
+- A facility name that is very long is shortened with an ellipsis without breaking the card.
+- The user's text size is increased to 200%: cards grow and nothing is clipped.
+- A Booker who is not university-affiliated never sees a discounted price.
+- A guest never sees personal data (name, bookings), even if the data source returns it.
+- The facility list is empty: the section shows no cards and the screen stays usable.
+- Landscape or short windows: the page scrolls and the navigation stays reachable.
+
+## Requirements *(mandatory)*
+
+### Functional Requirements
+
+- **FR-001**: Home MUST present two states, guest and signed-in Booker, selected from the session; until real sign-in exists the session is chosen through the page address (default guest).
+- **FR-002**: Guest Home MUST show the brand, a sign-in button, a pitch with a sign-in call to action, and the facility list; it MUST NOT show a greeting, booking card or navigation.
+- **FR-003**: Every booking entry point on guest Home (sign-in button, pitch button, facility card) MUST open the login screen.
+- **FR-004**: Each facility MUST show its name, category, booking mode (free booking or coached; the two flows are never merged) and an hourly price in EGP.
+- **FR-005**: The price shown MUST be computed automatically from the account type: guests and external visitors see the full price, university-affiliated Bookers see the discounted price with the full price struck through. Users and staff never enter prices.
+- **FR-006**: Booker Home MUST show a greeting with the Booker's name and either the next booking (facility, day and time, duration) or an empty-state invitation.
+- **FR-007**: Booker Home MUST offer four navigation destinations (Home, My bookings, Notifications, Profile); destinations other than Home MUST show a "coming soon" message. No quick-action buttons may duplicate the navigation.
+- **FR-008**: Navigation type MUST follow the window size class (bottom bar, side rail, extended rail) using the shared adaptive rules; Home MUST NOT introduce its own breakpoints.
+- **FR-009**: The facility grid MUST show 1, 2 or 3 columns according to the width of the content area, and MUST NOT overflow from 320 dp wide.
+- **FR-010**: Home MUST show a loading indicator while content loads, and an error message with a retry button when loading fails.
+- **FR-011**: The screen MUST be Arabic and right-to-left by default, with all text externalised for translation, and MUST use only the shared design tokens (colors, spacing, radii, type) and platform-adaptive controls.
+- **FR-012**: Facility cards MUST be readable by screen readers as a single item (name, booking mode, price); decorative art MUST be hidden from them.
+- **FR-013**: Content MUST come from a replaceable data source so a real backend can be connected later without changing the screen; for now it is mock data.
+
+### Key Entities
+
+- **Facility**: a bookable place (pool, gym, football pitch, basketball court) with a name, category, booking mode (free or coached), full price and discounted price per hour.
+- **Booker profile**: display name and account type (university-affiliated or external).
+- **Upcoming booking**: facility name, start time, duration in hours.
+- **Home content**: the facilities, plus (for a Booker only) the profile and the next booking.
+
+## Success Criteria *(mandatory)*
+
+### Measurable Outcomes
+
+- **SC-001**: A visitor can identify what Sprint offers, see prices, and reach the sign-in screen within 2 taps from opening Home.
+- **SC-002**: 100% of prices shown match the viewer's account type (full for guest/external, discounted for university-affiliated).
+- **SC-003**: Both states render with no overflow at 320, 360, 800, 1000 and 1400 dp wide.
+- **SC-004**: Both states are verified on web and on a phone simulator, and the full automated test suite and static analysis pass.
+- **SC-005**: No hardcoded colors, spacing values or user-facing strings exist in the Home code.
+
+## Assumptions
+
+- Real authentication and the real backend do not exist yet; session and data are mock (per the UI-first approach).
+- Facility names, prices and the booker's name are placeholders until the backend exists; the 50% university discount is unconfirmed.
+- There are no facility photos yet; a branded placeholder art tile is shown instead.
+- The Register screen, booking flow, payment, and the My bookings / Notifications / Profile screens are separate features.
+- Foldable hinge-aware layout is deferred; content scrolls and stays inside safe areas.
+- Prices are whole EGP per hour.
+- Constitution check: Clean Architecture layers, Riverpod, test-first domain, adaptive-first layout, platform-adaptive UI, BR-04 (separate flows) and BR-07 (automatic pricing) all apply and are verified in the plan.
